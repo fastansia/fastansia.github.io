@@ -1,0 +1,26 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <title>{title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Bangers&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <Navbar />
+        <slot />
+    </body>
+</html>

@@ -1,0 +1,377 @@
+{
+  "metadata": {
+    "title": "VDOT Running Fitness Classification Data",
+    "compiled_date": "2026-05-05",
+    "data_current_as_of": "May 2026",
+    "description": "A dataset classifying VDOT running fitness levels from 30 to 85. Each VDOT value maps to a classification tier with associated runner profile characteristics including typical training volume, experience requirements, physiological markers, and expected improvement rates. VDOT is a performance index created by Dr. Jack Daniels that represents current running fitness by combining aerobic capacity and running economy into a single score derived from race performance.",
+    "sources": [
+      {
+        "id": "daniels_book",
+        "name": "Daniels, Jack. Daniels' Running Formula, 4th Edition. Human Kinetics, 2022.",
+        "url": "https://www.humankinetics.com",
+        "notes": "Primary source for the VDOT framework, tier classification rationale, training zone definitions, and training philosophy."
+      },
+      {
+        "id": "daniels_gilbert_1979",
+        "name": "Daniels, Jack & Gilbert, Jimmy. Oxygen Power: Performance Tables for Distance Runners. 1979.",
+        "notes": "Original publication of the Daniels-Gilbert oxygen-cost formula underlying the VDOT system."
+      },
+      {
+        "id": "run_regimen",
+        "name": "Run Regimen. VDOT Calculator: Daniels-based race fitness, pace zones, and equivalent performances.",
+        "url": "https://runregimen.com/tools/vdot-calculator",
+        "notes": "Secondary reference for VDOT methodology, improvement rates by experience level, and tier characteristics."
+      }
+    ],
+    "formula": {
+      "name": "Daniels-Gilbert Oxygen-Cost Model",
+      "description": "VDOT is calculated from a race result (distance in meters and finish time in minutes). The formula models the oxygen cost of running at a given velocity and the fraction of VO2max sustainable over a given duration. VDOT captures both aerobic capacity and running economy.",
+      "oxygen_cost": "VO2 = -4.60 + 0.182258 * v + 0.000104 * v^2 (v = velocity in meters per minute)",
+      "percent_vo2max": "%VO2max = 0.8 + 0.1894393 * e^(-0.012778 * t) + 0.2989558 * e^(-0.1932605 * t) (t = time in minutes)",
+      "vdot_calculation": "VDOT = VO2 / %VO2max"
+    },
+    "vdot_range": {
+      "min": 30,
+      "max": 85
+    },
+    "tier_definitions": {
+      "beginner": {
+        "vdot_range": "30-35",
+        "definition": "New runners, those returning after extended breaks, or walkers transitioning to running. Minimal structured training background.",
+        "typical_weekly_volume_km": "10-25",
+        "typical_weekly_volume_mi": "6-15",
+        "training_days_per_week": "2-4",
+        "years_of_experience": "0-1",
+        "vo2max_estimate_ml_kg_min": "30-38",
+        "improvement_rate": "Rapid: 3-5 VDOT points per 12-week training block",
+        "key_focus": "Building consistency, injury prevention, aerobic base development"
+      },
+      "recreational": {
+        "vdot_range": "36-45",
+        "definition": "Regular runners who train consistently. Many complete their first half marathon or marathon at this level. Follow basic training plans.",
+        "typical_weekly_volume_km": "25-50",
+        "typical_weekly_volume_mi": "15-30",
+        "training_days_per_week": "3-5",
+        "years_of_experience": "0.5-3",
+        "vo2max_estimate_ml_kg_min": "38-48",
+        "improvement_rate": "Moderate: 2-3 VDOT points per 12-16 week training cycle",
+        "key_focus": "Structured training plans, introducing tempo and interval work, building long run endurance"
+      },
+      "competitive_amateur": {
+        "vdot_range": "46-55",
+        "definition": "Dedicated runners following structured training plans with periodization. Competitive in local races and age groups. Include tempo runs, intervals, and long runs.",
+        "typical_weekly_volume_km": "40-70",
+        "typical_weekly_volume_mi": "25-45",
+        "training_days_per_week": "4-6",
+        "years_of_experience": "2-5",
+        "vo2max_estimate_ml_kg_min": "48-58",
+        "improvement_rate": "Steady: 1-2 VDOT points per 12-16 week training cycle",
+        "key_focus": "Periodized training, race-specific workouts, pacing discipline, recovery optimization"
+      },
+      "advanced": {
+        "vdot_range": "56-65",
+        "definition": "Serious competitive runners. Top finishers in local and regional races. Many qualify for prestigious events such as the Boston Marathon. Highly structured training with coaching support.",
+        "typical_weekly_volume_km": "60-100",
+        "typical_weekly_volume_mi": "40-65",
+        "training_days_per_week": "5-7",
+        "years_of_experience": "4-8+",
+        "vo2max_estimate_ml_kg_min": "55-65",
+        "improvement_rate": "Slow: 0.5-1 VDOT point per full training season",
+        "key_focus": "High-volume training, strength work, lactate threshold optimization, racing strategy"
+      },
+      "elite": {
+        "vdot_range": "66-75",
+        "definition": "Post-collegiate competitive runners, semi-professional athletes, and top club runners. National-level competitors. Highly optimized training with periodization and sport science support.",
+        "typical_weekly_volume_km": "90-160",
+        "typical_weekly_volume_mi": "55-100",
+        "training_days_per_week": "6-7, often with doubles",
+        "years_of_experience": "6-12+",
+        "vo2max_estimate_ml_kg_min": "65-75",
+        "improvement_rate": "Marginal: less than 0.5 VDOT point per training season",
+        "key_focus": "Marginal gains, altitude training, biomechanical optimization, sport science support"
+      },
+      "world_class": {
+        "vdot_range": "76-85+",
+        "definition": "Professional runners, Olympic contenders, and world record chasers. Full-time athletic careers with comprehensive coaching and medical support teams.",
+        "typical_weekly_volume_km": "130-220+",
+        "typical_weekly_volume_mi": "80-140+",
+        "training_days_per_week": "7, frequently with doubles",
+        "years_of_experience": "10-20+",
+        "vo2max_estimate_ml_kg_min": "75-85+",
+        "improvement_rate": "Fractional: measured in seconds per race, not VDOT points",
+        "key_focus": "Genetic ceiling optimization, professional coaching infrastructure, peak periodization for championship events"
+      }
+    },
+    "training_zones": {
+      "E": {
+        "name": "Easy",
+        "purpose": "Aerobic base development and recovery",
+        "percent_vo2max": "59-74%",
+        "percent_max_hr": "65-79%",
+        "recommended_volume_share": "70-80% of weekly mileage",
+        "typical_duration": "30-150 min"
+      },
+      "M": {
+        "name": "Marathon",
+        "purpose": "Marathon-specific endurance and fat oxidation",
+        "percent_vo2max": "75-84%",
+        "percent_max_hr": "80-85%",
+        "typical_duration": "40-110 min"
+      },
+      "T": {
+        "name": "Threshold",
+        "purpose": "Lactate threshold improvement and sustained speed",
+        "percent_vo2max": "83-88%",
+        "percent_max_hr": "88-92%",
+        "typical_duration": "20-60 min"
+      },
+      "I": {
+        "name": "Interval",
+        "purpose": "VO2max development and aerobic power",
+        "percent_vo2max": "95-100%",
+        "percent_max_hr": "95-100%",
+        "typical_duration": "3-5 min work intervals"
+      },
+      "R": {
+        "name": "Repetition",
+        "purpose": "Running economy and neuromuscular speed",
+        "percent_vo2max": "105-120%",
+        "percent_max_hr": "Near max",
+        "typical_duration": "200-1200m reps with full recovery"
+      }
+    },
+    "limitations": [
+      "VDOT is a snapshot of current fitness and should be recalculated from a recent race (within 4-8 weeks) for accuracy.",
+      "Tier classifications and runner profiles are general guidelines. Individual variation in genetics, training history, body composition, and running economy means that runners with the same VDOT may have very different training volumes and experience levels.",
+      "The published Daniels tables define VDOT values from 30 to 80. Values 81-85 are included as logical extensions of the tier system but sit beyond the standard published range.",
+      "VDOT does not account for race conditions (heat, humidity, altitude, wind, course profile) that significantly affect the race performances used to calculate it.",
+      "First-time racers typically produce lower VDOT scores than their true fitness due to pacing inexperience."
+    ]
+  },
+  "data": {
+    "30": {
+      "vdot": 30,
+      "tier": "beginner"
+    },
+    "31": {
+      "vdot": 31,
+      "tier": "beginner"
+    },
+    "32": {
+      "vdot": 32,
+      "tier": "beginner"
+    },
+    "33": {
+      "vdot": 33,
+      "tier": "beginner"
+    },
+    "34": {
+      "vdot": 34,
+      "tier": "beginner"
+    },
+    "35": {
+      "vdot": 35,
+      "tier": "beginner"
+    },
+    "36": {
+      "vdot": 36,
+      "tier": "recreational"
+    },
+    "37": {
+      "vdot": 37,
+      "tier": "recreational"
+    },
+    "38": {
+      "vdot": 38,
+      "tier": "recreational"
+    },
+    "39": {
+      "vdot": 39,
+      "tier": "recreational"
+    },
+    "40": {
+      "vdot": 40,
+      "tier": "recreational"
+    },
+    "41": {
+      "vdot": 41,
+      "tier": "recreational"
+    },
+    "42": {
+      "vdot": 42,
+      "tier": "recreational"
+    },
+    "43": {
+      "vdot": 43,
+      "tier": "recreational"
+    },
+    "44": {
+      "vdot": 44,
+      "tier": "recreational"
+    },
+    "45": {
+      "vdot": 45,
+      "tier": "recreational"
+    },
+    "46": {
+      "vdot": 46,
+      "tier": "competitive_amateur"
+    },
+    "47": {
+      "vdot": 47,
+      "tier": "competitive_amateur"
+    },
+    "48": {
+      "vdot": 48,
+      "tier": "competitive_amateur"
+    },
+    "49": {
+      "vdot": 49,
+      "tier": "competitive_amateur"
+    },
+    "50": {
+      "vdot": 50,
+      "tier": "competitive_amateur"
+    },
+    "51": {
+      "vdot": 51,
+      "tier": "competitive_amateur"
+    },
+    "52": {
+      "vdot": 52,
+      "tier": "competitive_amateur"
+    },
+    "53": {
+      "vdot": 53,
+      "tier": "competitive_amateur"
+    },
+    "54": {
+      "vdot": 54,
+      "tier": "competitive_amateur"
+    },
+    "55": {
+      "vdot": 55,
+      "tier": "competitive_amateur"
+    },
+    "56": {
+      "vdot": 56,
+      "tier": "advanced"
+    },
+    "57": {
+      "vdot": 57,
+      "tier": "advanced"
+    },
+    "58": {
+      "vdot": 58,
+      "tier": "advanced"
+    },
+    "59": {
+      "vdot": 59,
+      "tier": "advanced"
+    },
+    "60": {
+      "vdot": 60,
+      "tier": "advanced"
+    },
+    "61": {
+      "vdot": 61,
+      "tier": "advanced"
+    },
+    "62": {
+      "vdot": 62,
+      "tier": "advanced"
+    },
+    "63": {
+      "vdot": 63,
+      "tier": "advanced"
+    },
+    "64": {
+      "vdot": 64,
+      "tier": "advanced"
+    },
+    "65": {
+      "vdot": 65,
+      "tier": "advanced"
+    },
+    "66": {
+      "vdot": 66,
+      "tier": "elite"
+    },
+    "67": {
+      "vdot": 67,
+      "tier": "elite"
+    },
+    "68": {
+      "vdot": 68,
+      "tier": "elite"
+    },
+    "69": {
+      "vdot": 69,
+      "tier": "elite"
+    },
+    "70": {
+      "vdot": 70,
+      "tier": "elite"
+    },
+    "71": {
+      "vdot": 71,
+      "tier": "elite"
+    },
+    "72": {
+      "vdot": 72,
+      "tier": "elite"
+    },
+    "73": {
+      "vdot": 73,
+      "tier": "elite"
+    },
+    "74": {
+      "vdot": 74,
+      "tier": "elite"
+    },
+    "75": {
+      "vdot": 75,
+      "tier": "elite"
+    },
+    "76": {
+      "vdot": 76,
+      "tier": "world_class"
+    },
+    "77": {
+      "vdot": 77,
+      "tier": "world_class"
+    },
+    "78": {
+      "vdot": 78,
+      "tier": "world_class"
+    },
+    "79": {
+      "vdot": 79,
+      "tier": "world_class"
+    },
+    "80": {
+      "vdot": 80,
+      "tier": "world_class"
+    },
+    "81": {
+      "vdot": 81,
+      "tier": "world_class"
+    },
+    "82": {
+      "vdot": 82,
+      "tier": "world_class"
+    },
+    "83": {
+      "vdot": 83,
+      "tier": "world_class"
+    },
+    "84": {
+      "vdot": 84,
+      "tier": "world_class"
+    },
+    "85": {
+      "vdot": 85,
+      "tier": "world_class"
+    }
+  }
+}

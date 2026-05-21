@@ -1,0 +1,339 @@
+# VDOT Levels Data Generation Spec
+
+> **Purpose:** This document defines the exact schema, dimensions, definitions, formatting rules, and sourcing methodology for generating a JSON dataset of VDOT running fitness classifications. Any AI model or script following this spec should produce a structurally identical and comparable output.
+
+---
+
+## 1. Output Format
+
+- **File type:** JSON (`.json`)
+- **Encoding:** UTF-8
+- **Top-level keys:** `metadata`, `data`
+
+---
+
+## 2. Dimensions
+
+### 2.1 VDOT Range
+
+Exactly 56 integer values from **30** to **85** inclusive, each represented as a string key in the `data` object (e.g., `"30"`, `"31"`, ..., `"85"`).
+
+> **Note:** VDOT values below 30 are uncommon in published tables and represent very low fitness; values above 85 exceed the published Daniels tables (which end at 80) by a significant margin and are increasingly theoretical.
+
+### 2.2 Classification Tiers
+
+Exactly 6 tiers, in ascending order of ability:
+
+| Key                    | VDOT Range | Definition                                                                                                                  |
+|------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `"beginner"`           | 30–35      | New runners, those returning after extended breaks, or walkers transitioning to running. Minimal structured training.        |
+| `"recreational"`       | 36–45      | Regular runners who train consistently. Many complete their first half marathon or marathon at this level.                   |
+| `"competitive_amateur"`| 46–55      | Dedicated runners following structured training plans with periodization. Competitive in local races and age groups.         |
+| `"advanced"`           | 56–65      | Serious competitive runners. Top finishers in local and regional races. Many qualify for events such as the Boston Marathon. |
+| `"elite"`              | 66–75      | Post-collegiate competitive runners, semi-professional athletes, and top club runners. National-level competitors.          |
+| `"world_class"`        | 76–85+     | Professional runners, Olympic contenders, and world record chasers. Full-time athletic careers.                             |
+
+---
+
+## 3. JSON Schema
+
+```jsonc
+{
+  "metadata": {
+    "title": "string — descriptive title of the dataset",
+    "compiled_date": "string — ISO 8601 date (YYYY-MM-DD) of generation",
+    "data_current_as_of": "string — month and year the data reflects (e.g., 'May 2026')",
+    "description": "string — one-paragraph summary of what this dataset contains",
+
+    "sources": [
+      {
+        "id": "string — unique short identifier for this source",
+        "name": "string — full citation (Author, Title, Publisher, Year)",
+        "url": "string | null — source URL (null if no URL available)",
+        "notes": "string — what this source contributed to the dataset"
+      }
+    ],
+
+    "formula": {
+      "name": "string — name of the mathematical model",
+      "description": "string — plain-language explanation of what the formula does and what inputs it requires",
+      "oxygen_cost": "string — VO2 equation with variable definitions",
+      "percent_vo2max": "string — %VO2max equation with variable definitions",
+      "vdot_calculation": "string — VDOT derivation equation"
+    },
+
+    "vdot_range": {
+      "min": "integer — lowest VDOT value in the dataset (30)",
+      "max": "integer — highest VDOT value in the dataset (85)"
+    },
+
+    "tier_definitions": {
+      "<tier_key>": {
+        "vdot_range": "string — e.g., '30-35'",
+        "definition": "string — description of runner profile at this tier",
+        "typical_weekly_volume_km": "string — range in kilometers",
+        "typical_weekly_volume_mi": "string — range in miles",
+        "training_days_per_week": "string — range or description",
+        "years_of_experience": "string — typical range",
+        "vo2max_estimate_ml_kg_min": "string — estimated VO2max range",
+        "improvement_rate": "string — expected VDOT improvement per training cycle",
+        "key_focus": "string — primary training focus at this tier"
+      }
+    },
+
+    "training_zones": {
+      "<zone_letter>": {
+        "name": "string — full zone name",
+        "purpose": "string — physiological purpose of this zone",
+        "percent_vo2max": "string — %VO2max range",
+        "percent_max_hr": "string — %MaxHR range",
+        "recommended_volume_share": "string (optional) — share of weekly mileage",
+        "typical_duration": "string — typical session duration or rep structure"
+      }
+    },
+
+    "limitations": [
+      "string — each entry describes one known limitation of the dataset or the VDOT model"
+    ]
+  },
+
+  "data": {
+    "<vdot_value>": {
+      "vdot": "integer — the VDOT score (redundant with key, for convenience)",
+      "tier": "string — one of the 6 tier keys from Section 2.2"
+    }
+  }
+}
+```
+
+### Access Pattern
+
+```
+data[vdot_value].tier → tier string
+data[vdot_value].vdot → integer
+metadata.tier_definitions[tier].definition → runner profile
+metadata.tier_definitions[tier].improvement_rate → improvement info
+```
+
+**Examples:**
+
+```
+data["50"].tier                                          → "competitive_amateur"
+data["50"].vdot                                          → 50
+metadata.tier_definitions["competitive_amateur"].vdot_range → "46-55"
+metadata.tier_definitions["competitive_amateur"].typical_weekly_volume_km → "40-70"
+
+data["75"].tier                                          → "elite"
+data["82"].tier                                          → "world_class"
+```
+
+---
+
+## 4. Metadata Field Specifications
+
+### 4.1 `sources` Array
+
+Must contain **at least 2 entries**. Each source object requires:
+
+| Field   | Type             | Required | Description                                      |
+|---------|------------------|----------|--------------------------------------------------|
+| `id`    | `string`         | Yes      | Unique short identifier (e.g., `"daniels_book"`) |
+| `name`  | `string`         | Yes      | Full citation: Author, Title, Publisher, Year     |
+| `url`   | `string \| null` | Yes      | Source URL, or `null` if no URL available         |
+| `notes` | `string`         | Yes      | What this source contributed to the dataset       |
+
+### 4.2 `formula` Object
+
+Documents the Daniels-Gilbert oxygen-cost model used to calculate VDOT from any race result. All 5 fields are required:
+
+| Field              | Description                                                              |
+|--------------------|--------------------------------------------------------------------------|
+| `name`             | `"Daniels-Gilbert Oxygen-Cost Model"`                                    |
+| `description`      | Plain-language explanation: inputs (distance + time), outputs (VDOT), what it captures (aerobic capacity + running economy) |
+| `oxygen_cost`      | VO2 equation: `VO2 = -4.60 + 0.182258 * v + 0.000104 * v^2`            |
+| `percent_vo2max`   | %VO2max equation with exponential decay terms                            |
+| `vdot_calculation` | `VDOT = VO2 / %VO2max`                                                  |
+
+### 4.3 `tier_definitions` Object
+
+Exactly 6 keys matching Section 2.2. Each tier object has exactly 9 fields:
+
+| Field                        | Type     | Description                                          |
+|------------------------------|----------|------------------------------------------------------|
+| `vdot_range`                 | `string` | e.g., `"30-35"`                                      |
+| `definition`                 | `string` | Runner profile description                           |
+| `typical_weekly_volume_km`   | `string` | Weekly mileage range in kilometers                   |
+| `typical_weekly_volume_mi`   | `string` | Weekly mileage range in miles                        |
+| `training_days_per_week`     | `string` | Frequency range or description                       |
+| `years_of_experience`        | `string` | Typical years of running experience                  |
+| `vo2max_estimate_ml_kg_min`  | `string` | Estimated VO2max range (ml/kg/min)                   |
+| `improvement_rate`           | `string` | Expected VDOT improvement per training cycle/season  |
+| `key_focus`                  | `string` | Primary training focus areas at this tier             |
+
+### 4.4 `training_zones` Object
+
+Exactly 5 keys: `"E"`, `"M"`, `"T"`, `"I"`, `"R"`. Each zone object has:
+
+| Field                       | Type     | Required | Description                           |
+|-----------------------------|----------|----------|---------------------------------------|
+| `name`                      | `string` | Yes      | Full zone name (e.g., `"Easy"`)       |
+| `purpose`                   | `string` | Yes      | Physiological purpose                 |
+| `percent_vo2max`            | `string` | Yes      | %VO2max range                         |
+| `percent_max_hr`            | `string` | Yes      | %MaxHR range                          |
+| `recommended_volume_share`  | `string` | No       | Share of weekly mileage (E zone only) |
+| `typical_duration`          | `string` | Yes      | Typical session length or rep format  |
+
+### 4.5 `limitations` Array
+
+An array of **at least 5** strings, each describing one known limitation of the VDOT model or the dataset.
+
+---
+
+## 5. Data Integrity Constraints
+
+These invariants **must** hold across the entire dataset. Use them as validation checks.
+
+### 5.1 Tier Consistency
+
+The `tier` field must match the VDOT value according to the classification in Section 2.2:
+
+| VDOT Range | Required Tier            |
+|------------|--------------------------|
+| 30–35      | `"beginner"`             |
+| 36–45      | `"recreational"`         |
+| 46–55      | `"competitive_amateur"`  |
+| 56–65      | `"advanced"`             |
+| 66–75      | `"elite"`                |
+| 76–85      | `"world_class"`          |
+
+### 5.2 VDOT Value Consistency
+
+The `vdot` integer field must match the string key it is stored under:
+
+```
+data["50"].vdot === 50
+data["73"].vdot === 73
+```
+
+### 5.3 Completeness
+
+All 56 keys from `"30"` to `"85"` must be present with no gaps. Every entry must contain exactly 2 fields: `vdot` (integer) and `tier` (string). No nulls, no empty strings.
+
+### 5.4 Total Data Point Count
+
+```
+56 VDOT values × 1 tier = 56 tier strings
+56 VDOT values × 1 vdot = 56 integers
+```
+
+---
+
+## 6. Sourcing Methodology
+
+### 6.1 Primary Source
+
+The VDOT framework and tier classification rationale are drawn from **Daniels' Running Formula, 4th Edition (Human Kinetics, 2022)** by Dr. Jack Daniels. The published tables define VDOT values from 30 to 80.
+
+### 6.2 Tier Classification Basis
+
+Tier definitions are based on training science literature and coaching consensus, synthesized from:
+
+- Daniels' Running Formula training volume and intensity recommendations by fitness level.
+- Published research on VO2max ranges by training status.
+- Coaching community norms for weekly mileage and training structure at various competitive levels.
+
+### 6.3 VDOT 81–85
+
+VDOT values 81–85 extend beyond the published Daniels tables (which end at 80). Their tier assignment (`"world_class"`) follows the same classification logic as VDOT 76–80 and is not extrapolated — it is a direct application of the tier boundary rules.
+
+### 6.4 Sourcing Rules
+
+1. **Always cite sources** in the `metadata.sources` array with full citations.
+2. **Tier definitions** should be based on training science literature and coaching consensus, not arbitrary boundaries.
+3. **Limitations must be documented** — the `metadata.limitations` array must contain at least 5 entries describing known constraints.
+4. **The formula must be documented** — the `metadata.formula` object must contain the complete Daniels-Gilbert equations so consumers can calculate VDOT from any race result.
+
+---
+
+## 7. Example: Complete Entry for One VDOT Value
+
+```json
+"50": {
+  "vdot": 50,
+  "tier": "competitive_amateur"
+}
+```
+
+**Tier profile lookup:**
+
+```json
+metadata.tier_definitions["competitive_amateur"] → {
+  "vdot_range": "46-55",
+  "definition": "Dedicated runners following structured training plans with periodization. Competitive in local races and age groups. Include tempo runs, intervals, and long runs.",
+  "typical_weekly_volume_km": "40-70",
+  "typical_weekly_volume_mi": "25-45",
+  "training_days_per_week": "4-6",
+  "years_of_experience": "2-5",
+  "vo2max_estimate_ml_kg_min": "48-58",
+  "improvement_rate": "Steady: 1-2 VDOT points per 12-16 week training cycle",
+  "key_focus": "Periodized training, race-specific workouts, pacing discipline, recovery optimization"
+}
+```
+
+---
+
+## 8. Validation Checklist
+
+Run these checks after generating the dataset:
+
+- [ ] Top-level keys are exactly `metadata` and `data`.
+- [ ] `data` contains exactly 56 keys: `"30"` through `"85"`.
+- [ ] Each data entry contains exactly 2 keys: `vdot`, `tier`.
+- [ ] All 56 `vdot` values are integers matching their string key.
+- [ ] All 56 `tier` values are valid keys from Section 2.2.
+- [ ] Tier assignments match VDOT ranges exactly (Section 5.1).
+- [ ] `metadata.sources` contains at least 2 entries with `id`, `name`, and `notes`.
+- [ ] `metadata.formula` contains all 5 required fields.
+- [ ] `metadata.vdot_range` contains `min: 30` and `max: 85`.
+- [ ] `metadata.tier_definitions` contains exactly 6 entries, each with 9 fields.
+- [ ] `metadata.training_zones` contains exactly 5 entries (`E`, `M`, `T`, `I`, `R`).
+- [ ] `metadata.limitations` contains at least 5 entries.
+- [ ] `metadata.compiled_date` is a valid ISO 8601 date.
+
+---
+
+## 9. Extension Points (Optional)
+
+If extending this dataset in the future, the following are valid additions that preserve backward compatibility:
+
+| Extension                       | How to Add                                                                                          |
+|---------------------------------|-----------------------------------------------------------------------------------------------------|
+| Extend VDOT range downward      | Add keys `"20"` through `"29"` to `data` + update `metadata.vdot_range.min`                        |
+| Extend VDOT range upward        | Add keys `"86"` through `"90"` to `data` + update `metadata.vdot_range.max`                        |
+| Add race equivalents            | Add a `"race_equivalents"` field to each data entry + add `"distances"` to metadata                |
+| Add training paces              | Add a `"training_paces"` field to each data entry with E/M/T/I/R paces per VDOT                    |
+| Add confidence flags            | Add a `"confidence"` field to each data entry: `"published"` or `"extrapolated"`                    |
+| Add world record cross-reference| Add a `"world_record_cross_reference"` object to metadata mapping records to approximate VDOT values|
+
+> **Rule:** Never remove or rename existing keys. Only add new ones.
+
+---
+
+## 10. Key Differences from Running Times Data Spec
+
+This dataset differs structurally from the companion Running Times dataset in several ways:
+
+| Aspect          | Running Times Spec                              | VDOT Levels Spec                                 |
+|-----------------|--------------------------------------------------|--------------------------------------------------|
+| Primary key     | Distance → Gender → Age Group → Skill Level      | VDOT Value                                       |
+| Dimensions      | 4 (distance, gender, age, skill)                  | 1 (VDOT score)                                   |
+| Data per entry  | 1 time value                                      | 1 tier classification                            |
+| Total entries   | 560 (7 × 2 × 8 × 5)                              | 56 (VDOT 30–85)                                  |
+| Demographics    | Yes (gender, age groups)                           | No (VDOT is gender- and age-agnostic)            |
+| Skill mapping   | Percentile-based (5th to 95th+)                    | Tier-based (6 tiers by VDOT range)               |
+| Time values     | Yes (race times in every entry)                    | No (pure classification)                         |
+| Formula         | Not included                                       | Daniels-Gilbert model fully documented           |
+
+---
+
+*Generated: 2026-05-05 · Schema Version: 2.0*

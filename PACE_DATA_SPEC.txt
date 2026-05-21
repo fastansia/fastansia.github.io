@@ -1,0 +1,293 @@
+# Running Times Data Generation Spec
+
+> **Purpose:** This document defines the exact schema, dimensions, definitions, formatting rules, and sourcing methodology for generating a JSON dataset of average running times. Any AI model or script following this spec should produce a structurally identical and comparable output.
+
+---
+
+## 1. Output Format
+
+- **File type:** JSON (`.json`)
+- **Encoding:** UTF-8
+- **Top-level keys:** `metadata`, `data`
+
+---
+
+## 2. Dimensions
+
+### 2.1 Distances
+
+Generate data for exactly these 7 distances, using numeric meters as keys (for direct speed calculations):
+
+| Key         | Distance (meters) | Display Name              | Type             |
+|-------------|-------------------|---------------------------|------------------|
+| `400`       | 400               | 400 Meters                | Sprint           |
+| `800`       | 800               | 800 Meters                | Middle Distance  |
+| `1000`      | 1000              | 1 Kilometer               | Middle Distance  |
+| `5000`      | 5000              | 5 Kilometers              | Road Race        |
+| `10000`     | 10000             | 10 Kilometers             | Road Race        |
+| `21097.5`   | 21097.5           | Half Marathon (21.0975 km)| Road Race        |
+| `42195`     | 42195             | Marathon (42.195 km)      | Road Race        |
+
+### 2.2 Genders
+
+Exactly 2 values: `"male"`, `"female"`
+
+### 2.3 Age Groups
+
+Exactly 8 groups, using decade-wide bins from 10 to 89:
+
+| Key       | Range   | Representative Age |
+|-----------|---------|--------------------|
+| `"10-19"` | 10–19   | 15                 |
+| `"20-29"` | 20–29   | 25                 |
+| `"30-39"` | 30–39   | 35                 |
+| `"40-49"` | 40–49   | 45                 |
+| `"50-59"` | 50–59   | 55                 |
+| `"60-69"` | 60–69   | 65                 |
+| `"70-79"` | 70–79   | 75                 |
+| `"80-89"` | 80–89   | 85                 |
+
+> **Note:** 90-99 is intentionally excluded due to insufficient race result data at that range.
+
+### 2.4 Skill Levels
+
+Exactly 5 levels, in ascending order of ability:
+
+| Key              | Percentile | Definition                                                                                        |
+|------------------|------------|---------------------------------------------------------------------------------------------------|
+| `"novice"`       | ~5th       | Has just started running or runs very occasionally. Slower than 95% of runners.                   |
+| `"beginner"`     | ~20th      | Has been running regularly for up to 6 months. Faster than ~20% of runners.                       |
+| `"intermediate"` | ~50th      | Has been running consistently for 1–2+ years with structured training. Median runner.             |
+| `"advanced"`     | ~80th      | Trains seriously with a structured program, typically 3–5+ years of experience.                   |
+| `"elite"`        | ~95th+     | Competitive or semi-professional level. Faster than ~95% of runners.                              |
+
+---
+
+## 3. JSON Schema
+
+```jsonc
+{
+  "metadata": {
+    "title": "string — descriptive title of the dataset",
+    "compiled_date": "string — ISO 8601 date (YYYY-MM-DD) of generation",
+    "data_current_as_of": "string — year or year range the data reflects (e.g. '2025-2026')",
+    "description": "string — one-paragraph summary of what this dataset contains",
+    "sources": [
+      {
+        "name": "string — source name",
+        "url": "string (optional) — source URL",
+        "notes": "string — what this source contributed"
+      }
+    ],
+    "skill_level_definitions": {
+      "novice": "string — definition (see Section 2.4)",
+      "beginner": "string",
+      "intermediate": "string",
+      "advanced": "string",
+      "elite": "string"
+    },
+    "age_groups": ["10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89"],
+    "distances": [400, 800, 1000, 5000, 10000, 21097.5, 42195],
+    "distanceLabels": {
+      "400": "400 Meters",
+      "800": "800 Meters",
+      "1000": "1 Kilometer",
+      "5000": "5 Kilometers",
+      "10000": "10 Kilometers",
+      "21097.5": "Half Marathon (21.0975 km)",
+      "42195": "Marathon (42.195 km)"
+    },
+    "genders": ["male", "female"],
+    "time_format": "string — describes the time notation used in the data values"
+  },
+  "data": {
+    "<distance>": {
+      "<gender>": {
+        "<age_group>": {
+          "novice": "<time>",
+          "beginner": "<time>",
+          "intermediate": "<time>",
+          "advanced": "<time>",
+          "elite": "<time>"
+        }
+      }
+    }
+  }
+}
+```
+
+### Access Pattern
+
+```
+data[distance][gender][age_group][skill_level] → time string
+```
+
+**Example:**
+
+```
+data[5000]["male"]["30-39"]["intermediate"] → "20:23"
+```
+
+---
+
+## 4. Time Formatting Rules
+
+All times are strings, **not** numeric values. Use the following notation consistently:
+
+| Duration Range       | Format      | Example     |
+|----------------------|-------------|-------------|
+| Under 1 minute       | `0:SS`      | `0:48`      |
+| 1 minute to 59:59    | `M:SS`      | `3:12`      |
+| 1 hour to 9:59:59    | `H:MM:SS`   | `1:30:37`   |
+| 10 hours and above   | `HH:MM:SS`  | (unlikely)  |
+
+### Rules
+
+- **No leading zeros** on the largest unit (use `1:03`, not `01:03`; use `0:48`, not `00:48`).
+- **Always two digits** for minutes and seconds when they are not the leading unit (use `1:05:03`, not `1:5:3`).
+- **Colons** (`:`) are the only separator.
+- **No units** in the value (no "min", "sec", "hrs").
+
+---
+
+## 5. Data Integrity Constraints
+
+These invariants **must** hold across the entire dataset. Use them as validation checks.
+
+### 5.1 Monotonicity by Skill Level
+
+For any fixed `(distance, gender, age_group)`, times must strictly decrease from novice → elite:
+
+```
+novice > beginner > intermediate > advanced > elite
+```
+
+### 5.2 Monotonicity by Age (peak at 20-29)
+
+For any fixed `(distance, gender, skill_level)`:
+
+- Times should **decrease** (get faster) from `10-19` → `20-29`.
+- Times should **increase** (get slower) from `20-29` → `80-89` monotonically.
+- `20-29` must be the fastest age group.
+
+### 5.3 Gender Gap
+
+For any fixed `(distance, age_group, skill_level)`:
+
+```
+female time > male time
+```
+
+The gap should be approximately **12–16%** across all distances, though sprints trend toward the higher end.
+
+### 5.4 Distance Scaling
+
+For any fixed `(gender, age_group, skill_level)`, times must increase with distance:
+
+```
+400m < 800m < 1k < 5k < 10k < half_marathon < marathon
+```
+
+### 5.5 Total Data Point Count
+
+```
+7 distances × 2 genders × 8 age_groups × 5 skill_levels = 560 data points
+```
+
+Every single one must be present. No nulls, no empty strings.
+
+---
+
+## 6. Sourcing Methodology
+
+### 6.1 Primary Source
+
+Use **aggregated race result databases** that derive percentile-based time standards from large sample sizes. Preferred:
+
+- [RunningLevel.com](https://runninglevel.com) — 35M+ race results, provides times by age, gender, and ability level.
+- [Running USA Race Results](https://www.runningusa.org) — U.S. road race participation and finish time statistics.
+
+### 6.2 Supplementary Sources
+
+For sprint and middle-distance events (400m, 800m) where road race databases have less coverage:
+
+- [Fitness Volt](https://www.fitnessvolt.com) — sprint/middle-distance benchmarks by age and ability.
+- [Marathon Handbook](https://marathonhandbook.com) — age-graded performance tables and benchmarks.
+- **World Athletics / USATF Age-Grading Tables** — the underlying methodology for adjusting performance expectations by age.
+
+### 6.3 Sourcing Rules
+
+1. **Always cite sources** in the `metadata.sources` array.
+2. **Cross-reference** at least 2 sources per distance when possible.
+3. **Prefer percentile-based data** over simple averages. The skill levels map to specific percentile bands (see Section 2.4).
+4. If a source provides data for a single representative age (e.g., age 30), **interpolate** using World Athletics age-grading factors to fill other age groups.
+5. **Flag extrapolations** — if data for a specific cell (e.g., 80-89 year-old female 400m elite) is estimated rather than directly sourced, note this in the metadata.
+
+---
+
+## 7. Example: Complete Entry for One Distance
+
+```json
+"5000": {
+  "male": {
+    "10-19": {"novice": "28:42", "beginner": "24:50", "intermediate": "21:30", "advanced": "18:43", "elite": "16:34"},
+    "20-29": {"novice": "26:35", "beginner": "23:01", "intermediate": "19:58", "advanced": "17:22", "elite": "15:23"},
+    "30-39": {"novice": "27:09", "beginner": "23:30", "intermediate": "20:23", "advanced": "17:44", "elite": "15:42"},
+    "40-49": {"novice": "29:14", "beginner": "25:19", "intermediate": "21:57", "advanced": "19:06", "elite": "16:54"},
+    "50-59": {"novice": "32:18", "beginner": "27:57", "intermediate": "24:14", "advanced": "21:05", "elite": "18:39"},
+    "60-69": {"novice": "36:14", "beginner": "31:23", "intermediate": "27:11", "advanced": "23:39", "elite": "20:56"},
+    "70-79": {"novice": "41:21", "beginner": "35:47", "intermediate": "31:01", "advanced": "26:58", "elite": "23:52"},
+    "80-89": {"novice": "47:55", "beginner": "41:27", "intermediate": "35:56", "advanced": "31:16", "elite": "27:41"}
+  },
+  "female": {
+    "10-19": {"novice": "34:00", "beginner": "29:27", "intermediate": "25:32", "advanced": "22:12", "elite": "19:40"},
+    "20-29": {"novice": "31:31", "beginner": "27:17", "intermediate": "23:39", "advanced": "20:34", "elite": "18:12"},
+    "30-39": {"novice": "32:14", "beginner": "27:54", "intermediate": "24:11", "advanced": "21:02", "elite": "18:37"},
+    "40-49": {"novice": "34:42", "beginner": "30:02", "intermediate": "26:02", "advanced": "22:38", "elite": "20:02"},
+    "50-59": {"novice": "38:19", "beginner": "33:10", "intermediate": "28:45", "advanced": "25:00", "elite": "22:08"},
+    "60-69": {"novice": "42:59", "beginner": "37:13", "intermediate": "32:16", "advanced": "28:04", "elite": "24:50"},
+    "70-79": {"novice": "49:03", "beginner": "42:28", "intermediate": "36:48", "advanced": "32:01", "elite": "28:20"},
+    "80-89": {"novice": "56:53", "beginner": "49:14", "intermediate": "42:41", "advanced": "37:07", "elite": "32:51"}
+  }
+}
+```
+
+---
+
+## 8. Validation Checklist
+
+Run these checks after generating the dataset:
+
+- [ ] Top-level keys are exactly `metadata` and `data`.
+- [ ] `data` contains exactly 7 distance keys matching Section 2.1.
+- [ ] Each distance contains exactly `male` and `female`.
+- [ ] Each gender contains exactly 8 age group keys matching Section 2.3.
+- [ ] Each age group contains exactly 5 skill level keys matching Section 2.4.
+- [ ] All 560 values are non-null, non-empty strings.
+- [ ] All time strings match the format rules in Section 4.
+- [ ] Monotonicity by skill level holds (Section 5.1).
+- [ ] Monotonicity by age holds with peak at 20-29 (Section 5.2).
+- [ ] Gender gap constraint holds (Section 5.3).
+- [ ] Distance scaling constraint holds (Section 5.4).
+- [ ] `metadata.sources` contains at least 1 entry with `name` and `notes`.
+- [ ] `metadata.compiled_date` is a valid ISO 8601 date.
+
+---
+
+## 9. Extension Points (Optional)
+
+If extending this dataset in the future, the following are valid additions that preserve backward compatibility:
+
+| Extension             | How to add                                                                       |
+|-----------------------|-----------------------------------------------------------------------------------|
+| New distances         | Add a new numeric key under `data` + add to `distanceLabels` and `distances`   |
+| New age group (90-99) | Add `"90-99"` key to each age group object + update metadata `age_groups`      |
+| Pace data             | Add a sibling `"data_pace"` object parallel to `"data"` with min/km           |
+| Numeric times         | Add a `"data_seconds"` sibling with all times as integer seconds              |
+| Confidence flags      | Add a `"data_confidence"` sibling with `"measured"` or `"estimated"`         |
+
+> **Rule:** Never remove or rename existing keys. Only add new ones.
+
+---
+
+*Generated: 2026-04-28 · Schema Version: 1.0*

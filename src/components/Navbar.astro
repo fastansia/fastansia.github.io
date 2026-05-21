@@ -1,0 +1,32 @@
+---
+const pathname = Astro.url.pathname;
+const currentPath = pathname === "/" ? "/" : pathname.replace(/\/$/, "");
+
+const isActive = (href: string) =>
+    currentPath === href || (href !== "/" && currentPath.startsWith(`${href}/`));
+---
+
+<nav class="navbar">
+    <ul class="flex justify-center bangers-regular text-3xl">
+        <li class:list={["navbar-item", { active: isActive("/") }]}>
+            <a href="/">Home</a>
+        </li>
+        <li class:list={["navbar-item", { active: isActive("/pace") }]}>
+            <a href="/pace">Pace</a>
+        </li>
+        <li class:list={["navbar-item", { active: isActive("/map") }]}>
+            <a href="/map">Map</a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    .navbar-item {
+        @apply grow text-center;
+    }
+
+    .navbar-item.active {
+        background: #000000;
+        color: #ffffff;
+    }
+</style>

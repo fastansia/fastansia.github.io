@@ -1,0 +1,78 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Calculator from "../components/Calculator";
+import PaceChart from "../components/PaceChart";
+import VdotChart from "../components/VdotChart";
+import { getRunningData } from "../lib/data/getRunningData";
+
+const { paceData, vdotData } = await getRunningData();
+---
+
+<Layout title="Pace">
+    <div class="p-8">
+        <Calculator client:load paceData={paceData} vdotData={vdotData} />
+    </div>
+    <div class="bg-black text-white flex flex-row items-stretch p-8">
+        <div class="flex-1 pr-8">
+            <h2 class="text-2xl font-bold mb-4 text-center">Distance Pace</h2>
+            <p class="mb-4">
+                Pace is the standard measurement of fitness level for a fixed
+                distance. Extremely effective for progress at a specific
+                distance. Standardized training plans utilizes pace to further
+                currate individual training.
+            </p>
+        </div>
+        <div class="bg-white w-px self-stretch mx-6" aria-hidden="true"></div>
+        <div class="flex-1 pl-8">
+            <h2 class="text-2xl font-bold mb-4 text-center">Individual VDOT</h2>
+            <p class="mb-4">
+                VDOT is the absolute measurement of fitness level across
+                different distances. Originally created by Jack Daniels, VDOT
+                predicts both the aerobotic capacity and running economy in one
+                number from race results. VDOT provides different training plans
+                from Jack Daniel's five training zones.
+            </p>
+        </div>
+    </div>
+    <div class="p-8 text-xl bangers-regular">
+        <PaceChart client:load data={paceData} />
+        {
+            Object.entries(paceData.metadata.skill_level_definitions).map(
+                ([level, definition]) => (
+                    <p>
+                        {level}: {definition}
+                    </p>
+                ),
+            )
+        }
+    </div>
+    <div class="separator"></div>
+    <div class="p-8 text-xl bangers-regular">
+        <VdotChart client:load data={vdotData} />
+        {
+            Object.entries(vdotData.metadata.tier_definitions).map(
+                ([tier, definitionObject]: [string, any]) => (
+                    <p>
+                        {tier}: {definitionObject.definition}
+                    </p>
+                ),
+            )
+        }
+        {
+            Object.values(vdotData.metadata.training_zones).map((zone: any) => (
+                <p>
+                    {zone.name}: {zone.purpose}
+                </p>
+            ))
+        }
+    </div>
+</Layout>
+
+<style>
+    .separator {
+        height: 10px;
+        width: 100vw;
+        background-color: black;
+        margin: 20px 0;
+    }
+</style>
