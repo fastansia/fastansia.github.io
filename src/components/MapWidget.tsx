@@ -91,7 +91,6 @@ export default function () {
     const mapInstanceRef = useRef<maplibregl.Map | null>(null);
     const [routes, setRoutes] = useState<Route[]>([]);
     const [activeRouteIndex, setActiveRouteIndex] = useState<number>(0);
-    const [routeEditingEnabled, setRouteEditingEnabled] = useState(false);
     const [isSnapping, setIsSnapping] = useState(false);
     const [snappingRouteIndex, setSnappingRouteIndex] = useState<number | null>(null);
 
@@ -112,7 +111,6 @@ export default function () {
                 return;
             }
             const data = await res.json();
-            console.log("Data from snap endpoint", data);
 
             const snappedPoints = normalizeSnapPoints(data);
             let routeGeometry: any = null;
@@ -225,7 +223,7 @@ export default function () {
 
         const map = new maplibregl.Map({
             container: mapRef.current,
-            style: "https://tiles.openfreemap.org/styles/liberty",
+            style: 'https://tiles.stadiamaps.com/styles/osm_bright.json',
             center: initialCenter,
             zoom: initialZoom,
             renderWorldCopies: false,
@@ -335,13 +333,11 @@ export default function () {
             });
         };
 
-        if (routeEditingEnabled) {
-            map.on('click', handler);
-        }
+        map.on('click', handler);
         return () => {
             map.off('click', handler);
         };
-    }, [routeEditingEnabled, activeRouteIndex]);
+    }, [activeRouteIndex]);
 
     useEffect(() => {
         const handler = (e: KeyboardEvent) => {
@@ -453,17 +449,10 @@ export default function () {
                             ) : null}
                         </div>
                     </div>
-                    <button
-                        type="button"
-                        className={`rounded-md px-3 py-1 text-xs font-medium ${routeEditingEnabled ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-800'}`}
-                        onClick={() => setRouteEditingEnabled((current) => !current)}
-                    >
-                        {routeEditingEnabled ? 'Editing on' : 'Editing off'}
-                    </button>
                 </div>
 
                 <p className="mt-2 text-xs text-slate-600">
-                    Turn editing on, then click the map to add points in order.
+                    Click the map to add points in order.
                 </p>
 
                 <div className="mt-3 flex gap-2">
