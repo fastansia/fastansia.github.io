@@ -198,6 +198,7 @@ export default function ({ paceData, vdotData }: Props) {
                     </div>
                 </div>
             </form>
+            <div className="h-5 w-full"></div>
             <h4 className="text-2xl text-gray-500 bangers-regular">Optional Fields (For Pace Classification)</h4>
             <div className="bangers-regular text-xl flex flex-row">
                 <p>Gender: </p>
@@ -228,6 +229,7 @@ export default function ({ paceData, vdotData }: Props) {
                     onChange={(e) => setAge(e.target.value ? Number(e.target.value) : 0)}
                 />
             </div>
+            <div className="h-5 w-full"></div>
             <div className="text-3xl bangers-regular">
                 {!paceKm && <p className="text-gray-500 bangers-regular">Enter time to calculate your pace and VDOT</p>}
                 {paceKm && <p className="bangers-regular">{paceKm}</p>}

@@ -23,6 +23,19 @@ const isActive = (href: string) =>
 <style>
     .navbar-item {
         @apply grow text-center;
+        border: 2px solid transparent;
+        border-color: black;
+    }
+
+    .navbar-item > a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 5px 0;
+    }
+
+    .navbar-item:hover:not(.active) {
+        cursor: pointer;
     }
 
     .navbar-item.active {
