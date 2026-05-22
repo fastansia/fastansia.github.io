@@ -13,6 +13,7 @@ const ROUTES_KEY = 'MAP_ROUTES_V1';
 const ROUTE_SOURCE_ID = 'route-source';
 const ROUTE_LINE_LAYER_ID = 'route-line-layer';
 const ROUTE_POINT_LAYER_ID = 'route-point-layer';
+const MAP_STYLE_URL = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 const SNAP_ENDPOINT = 'https://fastansia.samestimable2016.workers.dev/v2/snap';
 const DIRECTIONS_ENDPOINT = 'https://fastansia.samestimable2016.workers.dev/v2/directions';
 
@@ -223,7 +224,7 @@ export default function () {
 
         const map = new maplibregl.Map({
             container: mapRef.current,
-            style: 'https://tiles.stadiamaps.com/styles/osm_bright.json',
+            style: MAP_STYLE_URL,
             center: initialCenter,
             zoom: initialZoom,
             renderWorldCopies: false,
