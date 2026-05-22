@@ -26,11 +26,11 @@
       }
     ],
     "skill_level_definitions": {
-      "novice": "Has just started running or runs very occasionally. Slower than 95% of runners. Equivalent to bottom 5th percentile.",
-      "beginner": "Has been running regularly for up to 6 months. Faster than ~20% of runners. Roughly 20th percentile.",
-      "intermediate": "Has been running consistently for 1-2+ years with structured training. Faster than ~50% of runners. Roughly 50th percentile.",
-      "advanced": "Trains seriously with a structured program, typically 3-5+ years of experience. Faster than ~80% of runners. Roughly 80th percentile.",
-      "elite": "Competitive or semi-professional level. Faster than ~95% of runners. Roughly 95th percentile or above."
+      "Novice": "Has just started running or runs very occasionally. Slower than 95% of runners. Equivalent to bottom 5th percentile.",
+      "Beginner": "Has been running regularly for up to 6 months. Faster than ~20% of runners. Roughly 20th percentile.",
+      "Intermediate": "Has been running consistently for 1-2+ years with structured training. Faster than ~50% of runners. Roughly 50th percentile.",
+      "Advanced": "Trains seriously with a structured program, typically 3-5+ years of experience. Faster than ~80% of runners. Roughly 80th percentile.",
+      "Elite": "Competitive or semi-professional level. Faster than ~95% of runners. Roughly 95th percentile or above."
     },
     "age_groups": [
       "10-19",
@@ -70,826 +70,826 @@
     "400": {
       "male": {
         "10-19": {
-          "novice": "1:22",
-          "beginner": "1:12",
-          "intermediate": "1:03",
-          "advanced": "0:56",
-          "elite": "0:51"
+          "Novice": "1:22",
+          "Beginner": "1:12",
+          "Intermediate": "1:03",
+          "Advanced": "0:56",
+          "Elite": "0:51"
         },
         "20-29": {
-          "novice": "1:16",
-          "beginner": "1:07",
-          "intermediate": "0:59",
-          "advanced": "0:52",
-          "elite": "0:48"
+          "Novice": "1:16",
+          "Beginner": "1:07",
+          "Intermediate": "0:59",
+          "Advanced": "0:52",
+          "Elite": "0:48"
         },
         "30-39": {
-          "novice": "1:18",
-          "beginner": "1:08",
-          "intermediate": "1:00",
-          "advanced": "0:54",
-          "elite": "0:49"
+          "Novice": "1:18",
+          "Beginner": "1:08",
+          "Intermediate": "1:00",
+          "Advanced": "0:54",
+          "Elite": "0:49"
         },
         "40-49": {
-          "novice": "1:25",
-          "beginner": "1:14",
-          "intermediate": "1:05",
-          "advanced": "0:57",
-          "elite": "0:52"
+          "Novice": "1:25",
+          "Beginner": "1:14",
+          "Intermediate": "1:05",
+          "Advanced": "0:57",
+          "Elite": "0:52"
         },
         "50-59": {
-          "novice": "1:33",
-          "beginner": "1:21",
-          "intermediate": "1:11",
-          "advanced": "1:03",
-          "elite": "0:57"
+          "Novice": "1:33",
+          "Beginner": "1:21",
+          "Intermediate": "1:11",
+          "Advanced": "1:03",
+          "Elite": "0:57"
         },
         "60-69": {
-          "novice": "1:44",
-          "beginner": "1:31",
-          "intermediate": "1:19",
-          "advanced": "1:10",
-          "elite": "1:03"
+          "Novice": "1:44",
+          "Beginner": "1:31",
+          "Intermediate": "1:19",
+          "Advanced": "1:10",
+          "Elite": "1:03"
         },
         "70-79": {
-          "novice": "1:58",
-          "beginner": "1:43",
-          "intermediate": "1:30",
-          "advanced": "1:19",
-          "elite": "1:11"
+          "Novice": "1:58",
+          "Beginner": "1:43",
+          "Intermediate": "1:30",
+          "Advanced": "1:19",
+          "Elite": "1:11"
         },
         "80-89": {
-          "novice": "2:17",
-          "beginner": "1:59",
-          "intermediate": "1:44",
-          "advanced": "1:31",
-          "elite": "1:22"
+          "Novice": "2:17",
+          "Beginner": "1:59",
+          "Intermediate": "1:44",
+          "Advanced": "1:31",
+          "Elite": "1:22"
         }
       },
       "female": {
         "10-19": {
-          "novice": "1:38",
-          "beginner": "1:26",
-          "intermediate": "1:15",
-          "advanced": "1:06",
-          "elite": "1:00"
+          "Novice": "1:38",
+          "Beginner": "1:26",
+          "Intermediate": "1:15",
+          "Advanced": "1:06",
+          "Elite": "1:00"
         },
         "20-29": {
-          "novice": "1:31",
-          "beginner": "1:20",
-          "intermediate": "1:10",
-          "advanced": "1:02",
-          "elite": "0:56"
+          "Novice": "1:31",
+          "Beginner": "1:20",
+          "Intermediate": "1:10",
+          "Advanced": "1:02",
+          "Elite": "0:56"
         },
         "30-39": {
-          "novice": "1:34",
-          "beginner": "1:22",
-          "intermediate": "1:12",
-          "advanced": "1:03",
-          "elite": "0:57"
+          "Novice": "1:34",
+          "Beginner": "1:22",
+          "Intermediate": "1:12",
+          "Advanced": "1:03",
+          "Elite": "0:57"
         },
         "40-49": {
-          "novice": "1:41",
-          "beginner": "1:28",
-          "intermediate": "1:17",
-          "advanced": "1:08",
-          "elite": "1:01"
+          "Novice": "1:41",
+          "Beginner": "1:28",
+          "Intermediate": "1:17",
+          "Advanced": "1:08",
+          "Elite": "1:01"
         },
         "50-59": {
-          "novice": "1:51",
-          "beginner": "1:37",
-          "intermediate": "1:25",
-          "advanced": "1:14",
-          "elite": "1:07"
+          "Novice": "1:51",
+          "Beginner": "1:37",
+          "Intermediate": "1:25",
+          "Advanced": "1:14",
+          "Elite": "1:07"
         },
         "60-69": {
-          "novice": "2:04",
-          "beginner": "1:48",
-          "intermediate": "1:34",
-          "advanced": "1:23",
-          "elite": "1:14"
+          "Novice": "2:04",
+          "Beginner": "1:48",
+          "Intermediate": "1:34",
+          "Advanced": "1:23",
+          "Elite": "1:14"
         },
         "70-79": {
-          "novice": "2:21",
-          "beginner": "2:03",
-          "intermediate": "1:47",
-          "advanced": "1:34",
-          "elite": "1:24"
+          "Novice": "2:21",
+          "Beginner": "2:03",
+          "Intermediate": "1:47",
+          "Advanced": "1:34",
+          "Elite": "1:24"
         },
         "80-89": {
-          "novice": "2:43",
-          "beginner": "2:22",
-          "intermediate": "2:04",
-          "advanced": "1:49",
-          "elite": "1:37"
+          "Novice": "2:43",
+          "Beginner": "2:22",
+          "Intermediate": "2:04",
+          "Advanced": "1:49",
+          "Elite": "1:37"
         }
       }
     },
     "800": {
       "male": {
         "10-19": {
-          "novice": "3:12",
-          "beginner": "2:48",
-          "intermediate": "2:27",
-          "advanced": "2:10",
-          "elite": "1:57"
+          "Novice": "3:12",
+          "Beginner": "2:48",
+          "Intermediate": "2:27",
+          "Advanced": "2:10",
+          "Elite": "1:57"
         },
         "20-29": {
-          "novice": "2:59",
-          "beginner": "2:36",
-          "intermediate": "2:17",
-          "advanced": "2:01",
-          "elite": "1:49"
+          "Novice": "2:59",
+          "Beginner": "2:36",
+          "Intermediate": "2:17",
+          "Advanced": "2:01",
+          "Elite": "1:49"
         },
         "30-39": {
-          "novice": "3:03",
-          "beginner": "2:40",
-          "intermediate": "2:20",
-          "advanced": "2:04",
-          "elite": "1:51"
+          "Novice": "3:03",
+          "Beginner": "2:40",
+          "Intermediate": "2:20",
+          "Advanced": "2:04",
+          "Elite": "1:51"
         },
         "40-49": {
-          "novice": "3:17",
-          "beginner": "2:52",
-          "intermediate": "2:30",
-          "advanced": "2:13",
-          "elite": "1:59"
+          "Novice": "3:17",
+          "Beginner": "2:52",
+          "Intermediate": "2:30",
+          "Advanced": "2:13",
+          "Elite": "1:59"
         },
         "50-59": {
-          "novice": "3:38",
-          "beginner": "3:10",
-          "intermediate": "2:46",
-          "advanced": "2:26",
-          "elite": "2:10"
+          "Novice": "3:38",
+          "Beginner": "3:10",
+          "Intermediate": "2:46",
+          "Advanced": "2:26",
+          "Elite": "2:10"
         },
         "60-69": {
-          "novice": "4:05",
-          "beginner": "3:33",
-          "intermediate": "3:06",
-          "advanced": "2:43",
-          "elite": "2:25"
+          "Novice": "4:05",
+          "Beginner": "3:33",
+          "Intermediate": "3:06",
+          "Advanced": "2:43",
+          "Elite": "2:25"
         },
         "70-79": {
-          "novice": "4:40",
-          "beginner": "4:04",
-          "intermediate": "3:32",
-          "advanced": "3:06",
-          "elite": "2:45"
+          "Novice": "4:40",
+          "Beginner": "4:04",
+          "Intermediate": "3:32",
+          "Advanced": "3:06",
+          "Elite": "2:45"
         },
         "80-89": {
-          "novice": "5:25",
-          "beginner": "4:43",
-          "intermediate": "4:06",
-          "advanced": "3:35",
-          "elite": "3:11"
+          "Novice": "5:25",
+          "Beginner": "4:43",
+          "Intermediate": "4:06",
+          "Advanced": "3:35",
+          "Elite": "3:11"
         }
       },
       "female": {
         "10-19": {
-          "novice": "3:49",
-          "beginner": "3:19",
-          "intermediate": "2:53",
-          "advanced": "2:31",
-          "elite": "2:15"
+          "Novice": "3:49",
+          "Beginner": "3:19",
+          "Intermediate": "2:53",
+          "Advanced": "2:31",
+          "Elite": "2:15"
         },
         "20-29": {
-          "novice": "3:33",
-          "beginner": "3:05",
-          "intermediate": "2:41",
-          "advanced": "2:21",
-          "elite": "2:05"
+          "Novice": "3:33",
+          "Beginner": "3:05",
+          "Intermediate": "2:41",
+          "Advanced": "2:21",
+          "Elite": "2:05"
         },
         "30-39": {
-          "novice": "3:38",
-          "beginner": "3:09",
-          "intermediate": "2:44",
-          "advanced": "2:23",
-          "elite": "2:07"
+          "Novice": "3:38",
+          "Beginner": "3:09",
+          "Intermediate": "2:44",
+          "Advanced": "2:23",
+          "Elite": "2:07"
         },
         "40-49": {
-          "novice": "3:55",
-          "beginner": "3:23",
-          "intermediate": "2:56",
-          "advanced": "2:33",
-          "elite": "2:16"
+          "Novice": "3:55",
+          "Beginner": "3:23",
+          "Intermediate": "2:56",
+          "Advanced": "2:33",
+          "Elite": "2:16"
         },
         "50-59": {
-          "novice": "4:19",
-          "beginner": "3:44",
-          "intermediate": "3:14",
-          "advanced": "2:49",
-          "elite": "2:29"
+          "Novice": "4:19",
+          "Beginner": "3:44",
+          "Intermediate": "3:14",
+          "Advanced": "2:49",
+          "Elite": "2:29"
         },
         "60-69": {
-          "novice": "4:50",
-          "beginner": "4:12",
-          "intermediate": "3:38",
-          "advanced": "3:10",
-          "elite": "2:47"
+          "Novice": "4:50",
+          "Beginner": "4:12",
+          "Intermediate": "3:38",
+          "Advanced": "3:10",
+          "Elite": "2:47"
         },
         "70-79": {
-          "novice": "5:31",
-          "beginner": "4:47",
-          "intermediate": "4:08",
-          "advanced": "3:36",
-          "elite": "3:10"
+          "Novice": "5:31",
+          "Beginner": "4:47",
+          "Intermediate": "4:08",
+          "Advanced": "3:36",
+          "Elite": "3:10"
         },
         "80-89": {
-          "novice": "6:24",
-          "beginner": "5:32",
-          "intermediate": "4:47",
-          "advanced": "4:10",
-          "elite": "3:40"
+          "Novice": "6:24",
+          "Beginner": "5:32",
+          "Intermediate": "4:47",
+          "Advanced": "4:10",
+          "Elite": "3:40"
         }
       }
     },
     "1000": {
       "male": {
         "10-19": {
-          "novice": "4:33",
-          "beginner": "3:57",
-          "intermediate": "3:26",
-          "advanced": "3:01",
-          "elite": "2:42"
+          "Novice": "4:33",
+          "Beginner": "3:57",
+          "Intermediate": "3:26",
+          "Advanced": "3:01",
+          "Elite": "2:42"
         },
         "20-29": {
-          "novice": "4:13",
-          "beginner": "3:40",
-          "intermediate": "3:12",
-          "advanced": "2:48",
-          "elite": "2:30"
+          "Novice": "4:13",
+          "Beginner": "3:40",
+          "Intermediate": "3:12",
+          "Advanced": "2:48",
+          "Elite": "2:30"
         },
         "30-39": {
-          "novice": "4:19",
-          "beginner": "3:45",
-          "intermediate": "3:16",
-          "advanced": "2:51",
-          "elite": "2:32"
+          "Novice": "4:19",
+          "Beginner": "3:45",
+          "Intermediate": "3:16",
+          "Advanced": "2:51",
+          "Elite": "2:32"
         },
         "40-49": {
-          "novice": "4:39",
-          "beginner": "4:02",
-          "intermediate": "3:31",
-          "advanced": "3:04",
-          "elite": "2:43"
+          "Novice": "4:39",
+          "Beginner": "4:02",
+          "Intermediate": "3:31",
+          "Advanced": "3:04",
+          "Elite": "2:43"
         },
         "50-59": {
-          "novice": "5:08",
-          "beginner": "4:28",
-          "intermediate": "3:53",
-          "advanced": "3:23",
-          "elite": "3:00"
+          "Novice": "5:08",
+          "Beginner": "4:28",
+          "Intermediate": "3:53",
+          "Advanced": "3:23",
+          "Elite": "3:00"
         },
         "60-69": {
-          "novice": "5:46",
-          "beginner": "5:00",
-          "intermediate": "4:21",
-          "advanced": "3:47",
-          "elite": "3:21"
+          "Novice": "5:46",
+          "Beginner": "5:00",
+          "Intermediate": "4:21",
+          "Advanced": "3:47",
+          "Elite": "3:21"
         },
         "70-79": {
-          "novice": "6:34",
-          "beginner": "5:42",
-          "intermediate": "4:57",
-          "advanced": "4:18",
-          "elite": "3:49"
+          "Novice": "6:34",
+          "Beginner": "5:42",
+          "Intermediate": "4:57",
+          "Advanced": "4:18",
+          "Elite": "3:49"
         },
         "80-89": {
-          "novice": "7:36",
-          "beginner": "6:35",
-          "intermediate": "5:43",
-          "advanced": "4:58",
-          "elite": "4:24"
+          "Novice": "7:36",
+          "Beginner": "6:35",
+          "Intermediate": "5:43",
+          "Advanced": "4:58",
+          "Elite": "4:24"
         }
       },
       "female": {
         "10-19": {
-          "novice": "5:24",
-          "beginner": "4:41",
-          "intermediate": "4:04",
-          "advanced": "3:32",
-          "elite": "3:07"
+          "Novice": "5:24",
+          "Beginner": "4:41",
+          "Intermediate": "4:04",
+          "Advanced": "3:32",
+          "Elite": "3:07"
         },
         "20-29": {
-          "novice": "5:01",
-          "beginner": "4:21",
-          "intermediate": "3:47",
-          "advanced": "3:17",
-          "elite": "2:54"
+          "Novice": "5:01",
+          "Beginner": "4:21",
+          "Intermediate": "3:47",
+          "Advanced": "3:17",
+          "Elite": "2:54"
         },
         "30-39": {
-          "novice": "5:08",
-          "beginner": "4:27",
-          "intermediate": "3:52",
-          "advanced": "3:21",
-          "elite": "2:57"
+          "Novice": "5:08",
+          "Beginner": "4:27",
+          "Intermediate": "3:52",
+          "Advanced": "3:21",
+          "Elite": "2:57"
         },
         "40-49": {
-          "novice": "5:31",
-          "beginner": "4:47",
-          "intermediate": "4:09",
-          "advanced": "3:36",
-          "elite": "3:10"
+          "Novice": "5:31",
+          "Beginner": "4:47",
+          "Intermediate": "4:09",
+          "Advanced": "3:36",
+          "Elite": "3:10"
         },
         "50-59": {
-          "novice": "6:05",
-          "beginner": "5:17",
-          "intermediate": "4:35",
-          "advanced": "3:59",
-          "elite": "3:30"
+          "Novice": "6:05",
+          "Beginner": "5:17",
+          "Intermediate": "4:35",
+          "Advanced": "3:59",
+          "Elite": "3:30"
         },
         "60-69": {
-          "novice": "6:50",
-          "beginner": "5:56",
-          "intermediate": "5:09",
-          "advanced": "4:28",
-          "elite": "3:55"
+          "Novice": "6:50",
+          "Beginner": "5:56",
+          "Intermediate": "5:09",
+          "Advanced": "4:28",
+          "Elite": "3:55"
         },
         "70-79": {
-          "novice": "7:47",
-          "beginner": "6:45",
-          "intermediate": "5:51",
-          "advanced": "5:05",
-          "elite": "4:28"
+          "Novice": "7:47",
+          "Beginner": "6:45",
+          "Intermediate": "5:51",
+          "Advanced": "5:05",
+          "Elite": "4:28"
         },
         "80-89": {
-          "novice": "9:01",
-          "beginner": "7:49",
-          "intermediate": "6:47",
-          "advanced": "5:53",
-          "elite": "5:10"
+          "Novice": "9:01",
+          "Beginner": "7:49",
+          "Intermediate": "6:47",
+          "Advanced": "5:53",
+          "Elite": "5:10"
         }
       }
     },
     "5000": {
       "male": {
         "10-19": {
-          "novice": "28:42",
-          "beginner": "24:50",
-          "intermediate": "21:30",
-          "advanced": "18:43",
-          "elite": "16:34"
+          "Novice": "28:42",
+          "Beginner": "24:50",
+          "Intermediate": "21:30",
+          "Advanced": "18:43",
+          "Elite": "16:34"
         },
         "20-29": {
-          "novice": "26:35",
-          "beginner": "23:01",
-          "intermediate": "19:58",
-          "advanced": "17:22",
-          "elite": "15:23"
+          "Novice": "26:35",
+          "Beginner": "23:01",
+          "Intermediate": "19:58",
+          "Advanced": "17:22",
+          "Elite": "15:23"
         },
         "30-39": {
-          "novice": "27:09",
-          "beginner": "23:30",
-          "intermediate": "20:23",
-          "advanced": "17:44",
-          "elite": "15:42"
+          "Novice": "27:09",
+          "Beginner": "23:30",
+          "Intermediate": "20:23",
+          "Advanced": "17:44",
+          "Elite": "15:42"
         },
         "40-49": {
-          "novice": "29:14",
-          "beginner": "25:19",
-          "intermediate": "21:57",
-          "advanced": "19:06",
-          "elite": "16:54"
+          "Novice": "29:14",
+          "Beginner": "25:19",
+          "Intermediate": "21:57",
+          "Advanced": "19:06",
+          "Elite": "16:54"
         },
         "50-59": {
-          "novice": "32:18",
-          "beginner": "27:57",
-          "intermediate": "24:14",
-          "advanced": "21:05",
-          "elite": "18:39"
+          "Novice": "32:18",
+          "Beginner": "27:57",
+          "Intermediate": "24:14",
+          "Advanced": "21:05",
+          "Elite": "18:39"
         },
         "60-69": {
-          "novice": "36:14",
-          "beginner": "31:23",
-          "intermediate": "27:11",
-          "advanced": "23:39",
-          "elite": "20:56"
+          "Novice": "36:14",
+          "Beginner": "31:23",
+          "Intermediate": "27:11",
+          "Advanced": "23:39",
+          "Elite": "20:56"
         },
         "70-79": {
-          "novice": "41:21",
-          "beginner": "35:47",
-          "intermediate": "31:01",
-          "advanced": "26:58",
-          "elite": "23:52"
+          "Novice": "41:21",
+          "Beginner": "35:47",
+          "Intermediate": "31:01",
+          "Advanced": "26:58",
+          "Elite": "23:52"
         },
         "80-89": {
-          "novice": "47:55",
-          "beginner": "41:27",
-          "intermediate": "35:56",
-          "advanced": "31:16",
-          "elite": "27:41"
+          "Novice": "47:55",
+          "Beginner": "41:27",
+          "Intermediate": "35:56",
+          "Advanced": "31:16",
+          "Elite": "27:41"
         }
       },
       "female": {
         "10-19": {
-          "novice": "34:00",
-          "beginner": "29:27",
-          "intermediate": "25:32",
-          "advanced": "22:12",
-          "elite": "19:40"
+          "Novice": "34:00",
+          "Beginner": "29:27",
+          "Intermediate": "25:32",
+          "Advanced": "22:12",
+          "Elite": "19:40"
         },
         "20-29": {
-          "novice": "31:31",
-          "beginner": "27:17",
-          "intermediate": "23:39",
-          "advanced": "20:34",
-          "elite": "18:12"
+          "Novice": "31:31",
+          "Beginner": "27:17",
+          "Intermediate": "23:39",
+          "Advanced": "20:34",
+          "Elite": "18:12"
         },
         "30-39": {
-          "novice": "32:14",
-          "beginner": "27:54",
-          "intermediate": "24:11",
-          "advanced": "21:02",
-          "elite": "18:37"
+          "Novice": "32:14",
+          "Beginner": "27:54",
+          "Intermediate": "24:11",
+          "Advanced": "21:02",
+          "Elite": "18:37"
         },
         "40-49": {
-          "novice": "34:42",
-          "beginner": "30:02",
-          "intermediate": "26:02",
-          "advanced": "22:38",
-          "elite": "20:02"
+          "Novice": "34:42",
+          "Beginner": "30:02",
+          "Intermediate": "26:02",
+          "Advanced": "22:38",
+          "Elite": "20:02"
         },
         "50-59": {
-          "novice": "38:19",
-          "beginner": "33:10",
-          "intermediate": "28:45",
-          "advanced": "25:00",
-          "elite": "22:08"
+          "Novice": "38:19",
+          "Beginner": "33:10",
+          "Intermediate": "28:45",
+          "Advanced": "25:00",
+          "Elite": "22:08"
         },
         "60-69": {
-          "novice": "42:59",
-          "beginner": "37:13",
-          "intermediate": "32:16",
-          "advanced": "28:04",
-          "elite": "24:50"
+          "Novice": "42:59",
+          "Beginner": "37:13",
+          "Intermediate": "32:16",
+          "Advanced": "28:04",
+          "Elite": "24:50"
         },
         "70-79": {
-          "novice": "49:03",
-          "beginner": "42:28",
-          "intermediate": "36:48",
-          "advanced": "32:01",
-          "elite": "28:20"
+          "Novice": "49:03",
+          "Beginner": "42:28",
+          "Intermediate": "36:48",
+          "Advanced": "32:01",
+          "Elite": "28:20"
         },
         "80-89": {
-          "novice": "56:53",
-          "beginner": "49:14",
-          "intermediate": "42:41",
-          "advanced": "37:07",
-          "elite": "32:51"
+          "Novice": "56:53",
+          "Beginner": "49:14",
+          "Intermediate": "42:41",
+          "Advanced": "37:07",
+          "Elite": "32:51"
         }
       }
     },
     "10000": {
       "male": {
         "10-19": {
-          "novice": "1:00:19",
-          "beginner": "52:09",
-          "intermediate": "45:09",
-          "advanced": "39:16",
-          "elite": "34:45"
+          "Novice": "1:00:19",
+          "Beginner": "52:09",
+          "Intermediate": "45:09",
+          "Advanced": "39:16",
+          "Elite": "34:45"
         },
         "20-29": {
-          "novice": "55:48",
-          "beginner": "48:18",
-          "intermediate": "41:50",
-          "advanced": "36:24",
-          "elite": "32:13"
+          "Novice": "55:48",
+          "Beginner": "48:18",
+          "Intermediate": "41:50",
+          "Advanced": "36:24",
+          "Elite": "32:13"
         },
         "30-39": {
-          "novice": "57:02",
-          "beginner": "49:20",
-          "intermediate": "42:44",
-          "advanced": "37:10",
-          "elite": "32:54"
+          "Novice": "57:02",
+          "Beginner": "49:20",
+          "Intermediate": "42:44",
+          "Advanced": "37:10",
+          "Elite": "32:54"
         },
         "40-49": {
-          "novice": "1:01:23",
-          "beginner": "53:06",
-          "intermediate": "46:01",
-          "advanced": "40:01",
-          "elite": "35:25"
+          "Novice": "1:01:23",
+          "Beginner": "53:06",
+          "Intermediate": "46:01",
+          "Advanced": "40:01",
+          "Elite": "35:25"
         },
         "50-59": {
-          "novice": "1:07:49",
-          "beginner": "58:39",
-          "intermediate": "50:49",
-          "advanced": "44:12",
-          "elite": "39:07"
+          "Novice": "1:07:49",
+          "Beginner": "58:39",
+          "Intermediate": "50:49",
+          "Advanced": "44:12",
+          "Elite": "39:07"
         },
         "60-69": {
-          "novice": "1:16:07",
-          "beginner": "1:05:51",
-          "intermediate": "57:03",
-          "advanced": "49:37",
-          "elite": "43:54"
+          "Novice": "1:16:07",
+          "Beginner": "1:05:51",
+          "Intermediate": "57:03",
+          "Advanced": "49:37",
+          "Elite": "43:54"
         },
         "70-79": {
-          "novice": "1:26:51",
-          "beginner": "1:15:08",
-          "intermediate": "1:05:05",
-          "advanced": "56:35",
-          "elite": "50:05"
+          "Novice": "1:26:51",
+          "Beginner": "1:15:08",
+          "Intermediate": "1:05:05",
+          "Advanced": "56:35",
+          "Elite": "50:05"
         },
         "80-89": {
-          "novice": "1:40:39",
-          "beginner": "1:27:03",
-          "intermediate": "1:15:24",
-          "advanced": "1:05:33",
-          "elite": "58:01"
+          "Novice": "1:40:39",
+          "Beginner": "1:27:03",
+          "Intermediate": "1:15:24",
+          "Advanced": "1:05:33",
+          "Elite": "58:01"
         }
       },
       "female": {
         "10-19": {
-          "novice": "1:11:26",
-          "beginner": "1:01:49",
-          "intermediate": "53:33",
-          "advanced": "46:35",
-          "elite": "41:14"
+          "Novice": "1:11:26",
+          "Beginner": "1:01:49",
+          "Intermediate": "53:33",
+          "Advanced": "46:35",
+          "Elite": "41:14"
         },
         "20-29": {
-          "novice": "1:06:11",
-          "beginner": "57:16",
-          "intermediate": "49:38",
-          "advanced": "43:10",
-          "elite": "38:12"
+          "Novice": "1:06:11",
+          "Beginner": "57:16",
+          "Intermediate": "49:38",
+          "Advanced": "43:10",
+          "Elite": "38:12"
         },
         "30-39": {
-          "novice": "1:07:41",
-          "beginner": "58:33",
-          "intermediate": "50:44",
-          "advanced": "44:08",
-          "elite": "39:04"
+          "Novice": "1:07:41",
+          "Beginner": "58:33",
+          "Intermediate": "50:44",
+          "Advanced": "44:08",
+          "Elite": "39:04"
         },
         "40-49": {
-          "novice": "1:12:53",
-          "beginner": "1:03:04",
-          "intermediate": "54:38",
-          "advanced": "47:31",
-          "elite": "42:04"
+          "Novice": "1:12:53",
+          "Beginner": "1:03:04",
+          "Intermediate": "54:38",
+          "Advanced": "47:31",
+          "Elite": "42:04"
         },
         "50-59": {
-          "novice": "1:20:28",
-          "beginner": "1:09:37",
-          "intermediate": "1:00:19",
-          "advanced": "52:27",
-          "elite": "46:25"
+          "Novice": "1:20:28",
+          "Beginner": "1:09:37",
+          "Intermediate": "1:00:19",
+          "Advanced": "52:27",
+          "Elite": "46:25"
         },
         "60-69": {
-          "novice": "1:30:16",
-          "beginner": "1:18:06",
-          "intermediate": "1:07:41",
-          "advanced": "58:52",
-          "elite": "52:05"
+          "Novice": "1:30:16",
+          "Beginner": "1:18:06",
+          "Intermediate": "1:07:41",
+          "Advanced": "58:52",
+          "Elite": "52:05"
         },
         "70-79": {
-          "novice": "1:43:02",
-          "beginner": "1:29:07",
-          "intermediate": "1:17:15",
-          "advanced": "1:07:10",
-          "elite": "59:27"
+          "Novice": "1:43:02",
+          "Beginner": "1:29:07",
+          "Intermediate": "1:17:15",
+          "Advanced": "1:07:10",
+          "Elite": "59:27"
         },
         "80-89": {
-          "novice": "1:59:25",
-          "beginner": "1:43:19",
-          "intermediate": "1:29:31",
-          "advanced": "1:17:54",
-          "elite": "1:08:55"
+          "Novice": "1:59:25",
+          "Beginner": "1:43:19",
+          "Intermediate": "1:29:31",
+          "Advanced": "1:17:54",
+          "Elite": "1:08:55"
         }
       }
     },
     "21097.5": {
       "male": {
         "10-19": {
-          "novice": "2:10:45",
-          "beginner": "1:53:06",
-          "intermediate": "1:37:51",
-          "advanced": "1:24:50",
-          "elite": "1:14:44"
+          "Novice": "2:10:45",
+          "Beginner": "1:53:06",
+          "Intermediate": "1:37:51",
+          "Advanced": "1:24:50",
+          "Elite": "1:14:44"
         },
         "20-29": {
-          "novice": "2:01:01",
-          "beginner": "1:44:42",
-          "intermediate": "1:30:37",
-          "advanced": "1:18:31",
-          "elite": "1:09:10"
+          "Novice": "2:01:01",
+          "Beginner": "1:44:42",
+          "Intermediate": "1:30:37",
+          "Advanced": "1:18:31",
+          "Elite": "1:09:10"
         },
         "30-39": {
-          "novice": "2:03:39",
-          "beginner": "1:47:00",
-          "intermediate": "1:32:35",
-          "advanced": "1:20:07",
-          "elite": "1:10:34"
+          "Novice": "2:03:39",
+          "Beginner": "1:47:00",
+          "Intermediate": "1:32:35",
+          "Advanced": "1:20:07",
+          "Elite": "1:10:34"
         },
         "40-49": {
-          "novice": "2:13:00",
-          "beginner": "1:55:05",
-          "intermediate": "1:39:34",
-          "advanced": "1:26:21",
-          "elite": "1:15:59"
+          "Novice": "2:13:00",
+          "Beginner": "1:55:05",
+          "Intermediate": "1:39:34",
+          "Advanced": "1:26:21",
+          "Elite": "1:15:59"
         },
         "50-59": {
-          "novice": "2:27:04",
-          "beginner": "2:07:16",
-          "intermediate": "1:50:08",
-          "advanced": "1:35:31",
-          "elite": "1:24:04"
+          "Novice": "2:27:04",
+          "Beginner": "2:07:16",
+          "Intermediate": "1:50:08",
+          "Advanced": "1:35:31",
+          "Elite": "1:24:04"
         },
         "60-69": {
-          "novice": "2:44:59",
-          "beginner": "2:22:48",
-          "intermediate": "2:03:35",
-          "advanced": "1:47:11",
-          "elite": "1:34:22"
+          "Novice": "2:44:59",
+          "Beginner": "2:22:48",
+          "Intermediate": "2:03:35",
+          "Advanced": "1:47:11",
+          "Elite": "1:34:22"
         },
         "70-79": {
-          "novice": "3:08:07",
-          "beginner": "2:42:47",
-          "intermediate": "2:20:53",
-          "advanced": "2:02:15",
-          "elite": "1:47:37"
+          "Novice": "3:08:07",
+          "Beginner": "2:42:47",
+          "Intermediate": "2:20:53",
+          "Advanced": "2:02:15",
+          "Elite": "1:47:37"
         },
         "80-89": {
-          "novice": "3:38:10",
-          "beginner": "3:08:48",
-          "intermediate": "2:43:23",
-          "advanced": "2:21:48",
-          "elite": "2:04:52"
+          "Novice": "3:38:10",
+          "Beginner": "3:08:48",
+          "Intermediate": "2:43:23",
+          "Advanced": "2:21:48",
+          "Elite": "2:04:52"
         }
       },
       "female": {
         "10-19": {
-          "novice": "2:34:25",
-          "beginner": "2:13:46",
-          "intermediate": "1:55:48",
-          "advanced": "1:40:10",
-          "elite": "1:28:19"
+          "Novice": "2:34:25",
+          "Beginner": "2:13:46",
+          "Intermediate": "1:55:48",
+          "Advanced": "1:40:10",
+          "Elite": "1:28:19"
         },
         "20-29": {
-          "novice": "2:23:03",
-          "beginner": "2:03:53",
-          "intermediate": "1:47:14",
-          "advanced": "1:32:44",
-          "elite": "1:21:44"
+          "Novice": "2:23:03",
+          "Beginner": "2:03:53",
+          "Intermediate": "1:47:14",
+          "Advanced": "1:32:44",
+          "Elite": "1:21:44"
         },
         "30-39": {
-          "novice": "2:26:18",
-          "beginner": "2:06:41",
-          "intermediate": "1:49:39",
-          "advanced": "1:34:50",
-          "elite": "1:23:32"
+          "Novice": "2:26:18",
+          "Beginner": "2:06:41",
+          "Intermediate": "1:49:39",
+          "Advanced": "1:34:50",
+          "Elite": "1:23:32"
         },
         "40-49": {
-          "novice": "2:37:23",
-          "beginner": "2:16:16",
-          "intermediate": "1:57:57",
-          "advanced": "1:42:01",
-          "elite": "1:29:53"
+          "Novice": "2:37:23",
+          "Beginner": "2:16:16",
+          "Intermediate": "1:57:57",
+          "Advanced": "1:42:01",
+          "Elite": "1:29:53"
         },
         "50-59": {
-          "novice": "2:53:50",
-          "beginner": "2:30:30",
-          "intermediate": "2:10:16",
-          "advanced": "1:52:42",
-          "elite": "1:39:20"
+          "Novice": "2:53:50",
+          "Beginner": "2:30:30",
+          "Intermediate": "2:10:16",
+          "Advanced": "1:52:42",
+          "Elite": "1:39:20"
         },
         "60-69": {
-          "novice": "3:14:54",
-          "beginner": "2:48:44",
-          "intermediate": "2:26:05",
-          "advanced": "2:06:26",
-          "elite": "1:51:26"
+          "Novice": "3:14:54",
+          "Beginner": "2:48:44",
+          "Intermediate": "2:26:05",
+          "Advanced": "2:06:26",
+          "Elite": "1:51:26"
         },
         "70-79": {
-          "novice": "3:41:59",
-          "beginner": "3:12:11",
-          "intermediate": "2:46:25",
-          "advanced": "2:24:05",
-          "elite": "2:06:51"
+          "Novice": "3:41:59",
+          "Beginner": "3:12:11",
+          "Intermediate": "2:46:25",
+          "Advanced": "2:24:05",
+          "Elite": "2:06:51"
         },
         "80-89": {
-          "novice": "4:17:17",
-          "beginner": "3:42:47",
-          "intermediate": "3:12:53",
-          "advanced": "2:47:07",
-          "elite": "2:26:07"
+          "Novice": "4:17:17",
+          "Beginner": "3:42:47",
+          "Intermediate": "3:12:53",
+          "Advanced": "2:47:07",
+          "Elite": "2:26:07"
         }
       }
     },
     "42195": {
       "male": {
         "10-19": {
-          "novice": "4:38:08",
-          "beginner": "4:00:40",
-          "intermediate": "3:28:21",
-          "advanced": "3:01:24",
-          "elite": "2:40:07"
+          "Novice": "4:38:08",
+          "Beginner": "4:00:40",
+          "Intermediate": "3:28:21",
+          "Advanced": "3:01:24",
+          "Elite": "2:40:07"
         },
         "20-29": {
-          "novice": "4:17:28",
-          "beginner": "3:42:50",
-          "intermediate": "3:12:54",
-          "advanced": "2:47:57",
-          "elite": "2:28:12"
+          "Novice": "4:17:28",
+          "Beginner": "3:42:50",
+          "Intermediate": "3:12:54",
+          "Advanced": "2:47:57",
+          "Elite": "2:28:12"
         },
         "30-39": {
-          "novice": "4:23:04",
-          "beginner": "3:47:41",
-          "intermediate": "3:17:05",
-          "advanced": "2:51:35",
-          "elite": "2:31:24"
+          "Novice": "4:23:04",
+          "Beginner": "3:47:41",
+          "Intermediate": "3:17:05",
+          "Advanced": "2:51:35",
+          "Elite": "2:31:24"
         },
         "40-49": {
-          "novice": "4:42:48",
-          "beginner": "4:04:45",
-          "intermediate": "3:31:52",
-          "advanced": "3:04:26",
-          "elite": "2:42:48"
+          "Novice": "4:42:48",
+          "Beginner": "4:04:45",
+          "Intermediate": "3:31:52",
+          "Advanced": "3:04:26",
+          "Elite": "2:42:48"
         },
         "50-59": {
-          "novice": "5:12:24",
-          "beginner": "4:30:23",
-          "intermediate": "3:54:04",
-          "advanced": "3:23:43",
-          "elite": "2:59:49"
+          "Novice": "5:12:24",
+          "Beginner": "4:30:23",
+          "Intermediate": "3:54:04",
+          "Advanced": "3:23:43",
+          "Elite": "2:59:49"
         },
         "60-69": {
-          "novice": "5:50:36",
-          "beginner": "5:03:24",
-          "intermediate": "4:22:40",
-          "advanced": "3:48:35",
-          "elite": "3:21:47"
+          "Novice": "5:50:36",
+          "Beginner": "5:03:24",
+          "Intermediate": "4:22:40",
+          "Advanced": "3:48:35",
+          "Elite": "3:21:47"
         },
         "70-79": {
-          "novice": "6:39:45",
-          "beginner": "5:45:56",
-          "intermediate": "4:59:28",
-          "advanced": "4:20:31",
-          "elite": "3:49:58"
+          "Novice": "6:39:45",
+          "Beginner": "5:45:56",
+          "Intermediate": "4:59:28",
+          "Advanced": "4:20:31",
+          "Elite": "3:49:58"
         },
         "80-89": {
-          "novice": "7:43:33",
-          "beginner": "6:41:11",
-          "intermediate": "5:47:15",
-          "advanced": "5:02:06",
-          "elite": "4:26:33"
+          "Novice": "7:43:33",
+          "Beginner": "6:41:11",
+          "Intermediate": "5:47:15",
+          "Advanced": "5:02:06",
+          "Elite": "4:26:33"
         }
       },
       "female": {
         "10-19": {
-          "novice": "5:29:04",
-          "beginner": "4:44:46",
-          "intermediate": "4:06:42",
-          "advanced": "3:34:12",
-          "elite": "3:08:56"
+          "Novice": "5:29:04",
+          "Beginner": "4:44:46",
+          "Intermediate": "4:06:42",
+          "Advanced": "3:34:12",
+          "Elite": "3:08:56"
         },
         "20-29": {
-          "novice": "5:05:04",
-          "beginner": "4:24:00",
-          "intermediate": "3:48:42",
-          "advanced": "3:18:34",
-          "elite": "2:55:09"
+          "Novice": "5:05:04",
+          "Beginner": "4:24:00",
+          "Intermediate": "3:48:42",
+          "Advanced": "3:18:34",
+          "Elite": "2:55:09"
         },
         "30-39": {
-          "novice": "5:11:56",
-          "beginner": "4:29:58",
-          "intermediate": "3:53:53",
-          "advanced": "3:23:03",
-          "elite": "2:59:05"
+          "Novice": "5:11:56",
+          "Beginner": "4:29:58",
+          "Intermediate": "3:53:53",
+          "Advanced": "3:23:03",
+          "Elite": "2:59:05"
         },
         "40-49": {
-          "novice": "5:35:28",
-          "beginner": "4:50:21",
-          "intermediate": "4:11:33",
-          "advanced": "3:38:25",
-          "elite": "3:12:37"
+          "Novice": "5:35:28",
+          "Beginner": "4:50:21",
+          "Intermediate": "4:11:33",
+          "Advanced": "3:38:25",
+          "Elite": "3:12:37"
         },
         "50-59": {
-          "novice": "6:10:12",
-          "beginner": "5:20:24",
-          "intermediate": "4:37:31",
-          "advanced": "4:01:01",
-          "elite": "3:32:32"
+          "Novice": "6:10:12",
+          "Beginner": "5:20:24",
+          "Intermediate": "4:37:31",
+          "Advanced": "4:01:01",
+          "Elite": "3:32:32"
         },
         "60-69": {
-          "novice": "6:55:11",
-          "beginner": "5:59:17",
-          "intermediate": "5:11:15",
-          "advanced": "4:30:22",
-          "elite": "3:58:26"
+          "Novice": "6:55:11",
+          "Beginner": "5:59:17",
+          "Intermediate": "5:11:15",
+          "Advanced": "4:30:22",
+          "Elite": "3:58:26"
         },
         "70-79": {
-          "novice": "7:53:22",
-          "beginner": "6:49:34",
-          "intermediate": "5:54:54",
-          "advanced": "5:08:18",
-          "elite": "4:31:53"
+          "Novice": "7:53:22",
+          "Beginner": "6:49:34",
+          "Intermediate": "5:54:54",
+          "Advanced": "5:08:18",
+          "Elite": "4:31:53"
         },
         "80-89": {
-          "novice": "9:09:12",
-          "beginner": "7:55:19",
-          "intermediate": "6:51:53",
-          "advanced": "5:57:49",
-          "elite": "5:15:29"
+          "Novice": "9:09:12",
+          "Beginner": "7:55:19",
+          "Intermediate": "6:51:53",
+          "Advanced": "5:57:49",
+          "Elite": "5:15:29"
         }
       }
     }
