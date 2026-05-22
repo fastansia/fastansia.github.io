@@ -4,5 +4,18 @@ import MapWidget from "../components/MapWidget";
 ---
 
 <Layout title="Map">
-    <MapWidget client:load />
+    <div class="map-page">
+        <MapWidget client:load />
+    </div>
 </Layout>
+
+<style>
+    .map-page {
+        position: fixed;
+        top: 50px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+    }
+</style>

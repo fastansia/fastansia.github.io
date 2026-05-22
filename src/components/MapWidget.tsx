@@ -407,7 +407,7 @@ export default function () {
     };
 
     return <>
-        <div className="relative w-full h-[70vh]">
+        <div className="relative h-full min-h-0 w-full overflow-hidden">
             <div className="absolute left-3 top-3 z-10 w-fit rounded-xl bg-white/95 p-3 shadow-lg ring-1 ring-black/10 backdrop-blur">
                 <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -475,7 +475,7 @@ export default function () {
                 </div>
             </div>
 
-            <div ref={mapRef} className="h-full w-full" />
+            <div ref={mapRef} className="h-full min-h-0 w-full" />
         </div>
     </>;
 }
