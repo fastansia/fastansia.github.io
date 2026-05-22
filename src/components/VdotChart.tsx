@@ -45,6 +45,52 @@ export default function VdotChart({ data }: Props) {
             });
     }, [data]);
 
+    const buildOptions = (tiersParam: any[]): echarts.EChartsOption => ({
+        title: { text: "VDOT Values by Tier" },
+        grid: { left: "4%", right: "4%", containLabel: true },
+        xAxis: {
+            type: "category",
+            name: "VDOT Tier",
+            nameLocation: "middle",
+            nameGap: 30,
+            data: tiersParam.map((tier) => tier.tier),
+            axisLabel: { interval: 0, rotate: 0 },
+        },
+        yAxis: { type: "value", name: "VDOT Value", nameLocation: "middle", nameGap: 40, nameRotate: 90, min: 0 },
+        tooltip: {
+            trigger: "item",
+            formatter: (params) => {
+                const item = params as any;
+                const tier = tiersParam.find((entry) => entry.tier === item.seriesName);
+                const range = tier?.range ? ` (${tier.range})` : "";
+                const value = Array.isArray(item.value) ? item.value[1] : item.value;
+                return `${item.seriesName}${range}<br/>VDOT: ${Number(value).toFixed(0)}`;
+            },
+        },
+        series: tiersParam.map((tier) => ({
+            name: tier.tier,
+            type: "custom",
+            dimensions: ["tier", "vdot", "index"],
+            encode: { x: "tier", y: "vdot", tooltip: ["tier", "vdot"] },
+            data: tier.values.map((value: number, index: number) => [tier.tier, value, index]),
+            renderItem: (params: any, api: any) => {
+                const value = Number(api.value(1));
+                const count = tier.values.length;
+                const categoryPoint = api.coord([tier.tier, value]);
+                const zeroPoint = api.coord([tier.tier, 0]);
+                const bandWidth = api.size([1, 0])[0];
+                const barWidth = Math.max(6, Math.min(18, bandWidth / Math.max(count * 1.5, 1)));
+                const totalWidth = barWidth * count;
+                const x = categoryPoint[0] - totalWidth / 2 + params.dataIndex * barWidth;
+                const y = Math.min(categoryPoint[1], zeroPoint[1]);
+                const height = Math.abs(zeroPoint[1] - categoryPoint[1]);
+
+                return { type: "rect", shape: { x, y, width: barWidth * 0.82, height }, style: api.style({ fill: tier.color }) };
+            },
+            itemStyle: { color: tier.color },
+        })),
+    });
+
     useEffect(() => {
         if (!chartRef.current) {
             return;
@@ -52,86 +98,7 @@ export default function VdotChart({ data }: Props) {
 
         const chart = echarts.init(chartRef.current);
         chartInstanceRef.current = chart;
-
-        const options: echarts.EChartsOption = {
-            title: {
-                text: "VDOT Values by Tier",
-            },
-            grid: {
-                left: "4%",
-                right: "4%",
-                containLabel: true,
-            },
-            xAxis: {
-                type: "category",
-                name: "VDOT Tier",
-                nameLocation: "middle",
-                nameGap: 30,
-                data: tiers.map((tier) => tier.tier),
-                axisLabel: {
-                    interval: 0,
-                    rotate: 0,
-                },
-            },
-            yAxis: {
-                type: "value",
-                name: "VDOT Value",
-                nameLocation: "middle",
-                nameGap: 40,
-                nameRotate: 90,
-                min: 0,
-            },
-            tooltip: {
-                trigger: "item",
-                formatter: (params) => {
-                    const item = params as any;
-                    const tier = tiers.find((entry) => entry.tier === item.seriesName);
-                    const range = tier?.range ? ` (${tier.range})` : "";
-                    const value = Array.isArray(item.value) ? item.value[1] : item.value;
-                    return `${item.seriesName}${range}<br/>VDOT: ${Number(value).toFixed(0)}`;
-                },
-            },
-            series: tiers.map((tier) => ({
-                name: tier.tier,
-                type: "custom",
-                dimensions: ["tier", "vdot", "index"],
-                encode: {
-                    x: "tier",
-                    y: "vdot",
-                    tooltip: ["tier", "vdot"],
-                },
-                data: tier.values.map((value, index) => [tier.tier, value, index]),
-                renderItem: (params: any, api: any) => {
-                    const value = Number(api.value(1));
-                    const count = tier.values.length;
-                    const categoryPoint = api.coord([tier.tier, value]);
-                    const zeroPoint = api.coord([tier.tier, 0]);
-                    const bandWidth = api.size([1, 0])[0];
-                    const barWidth = Math.max(6, Math.min(18, bandWidth / Math.max(count * 1.5, 1)));
-                    const totalWidth = barWidth * count;
-                    const x = categoryPoint[0] - totalWidth / 2 + params.dataIndex * barWidth;
-                    const y = Math.min(categoryPoint[1], zeroPoint[1]);
-                    const height = Math.abs(zeroPoint[1] - categoryPoint[1]);
-
-                    return {
-                        type: "rect",
-                        shape: {
-                            x,
-                            y,
-                            width: barWidth * 0.82,
-                            height,
-                        },
-                        style: api.style({
-                            fill: tier.color,
-                        }),
-                    };
-                },
-                itemStyle: {
-                    color: tier.color,
-                },
-            })),
-        };
-
+        const options = buildOptions(tiers);
         chart.setOption(options);
         chart.resize();
 
@@ -143,6 +110,27 @@ export default function VdotChart({ data }: Props) {
             chartInstanceRef.current = null;
             window.removeEventListener("resize", onResize);
         };
+    }, [tiers]);
+
+    // Reinitialize chart when pace tab becomes active
+    useEffect(() => {
+        const handler = (e: any) => {
+            const tab = e?.detail;
+            if (tab !== 'vdot') return;
+
+            // dispose existing chart and recreate
+            if (chartInstanceRef.current) {
+                chartInstanceRef.current.dispose();
+            }
+            if (!chartRef.current) return;
+            const chart = echarts.init(chartRef.current);
+            chartInstanceRef.current = chart;
+            chart.setOption(buildOptions(tiers));
+            chart.resize();
+        };
+
+        window.addEventListener('pace-tab-changed', handler as EventListener);
+        return () => window.removeEventListener('pace-tab-changed', handler as EventListener);
     }, [tiers]);
 
     return <div ref={chartRef} className="w-full aspect-video" />;

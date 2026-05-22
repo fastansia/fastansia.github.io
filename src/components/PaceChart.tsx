@@ -25,6 +25,7 @@ export default function ({ data }: any) {
     const chartInstanceRef = useRef<echarts.ECharts | null>(null);
     const [distance, setDistance] = useState<number>(data.metadata.distances[0]);
     const [gender, setGender] = useState<'male' | 'female'>('male');
+    const [initVersion, setInitVersion] = useState(0);
 
     useEffect(() => {
         const seriesMapping: Record<string, number[]> = {};
@@ -107,7 +108,17 @@ export default function ({ data }: any) {
             chartInstanceRef.current = null;
             window.removeEventListener('resize', onResize);
         };
-    }, [distance, gender, data])
+    }, [distance, gender, data, initVersion])
+
+    useEffect(() => {
+        const handler = (e: any) => {
+            const tab = e?.detail;
+            if (tab !== 'pace') return;
+            setInitVersion((v) => v + 1);
+        };
+        window.addEventListener('pace-tab-changed', handler as EventListener);
+        return () => window.removeEventListener('pace-tab-changed', handler as EventListener);
+    }, []);
 
     return (
         <div className="w-full mx-auto">

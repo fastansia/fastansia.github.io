@@ -12,19 +12,19 @@ const { paceData, vdotData } = await getRunningData();
     <div class="p-8">
         <Calculator client:load paceData={paceData} vdotData={vdotData} />
     </div>
-    <div class="bg-black text-white flex flex-row items-stretch p-8">
-        <div class="flex-1 pr-8">
-            <h2 class="text-2xl font-bold mb-4 text-center">Distance Pace</h2>
+    <div class="bg-black text-white text-3xl flex flex-row items-stretch p-8 cossette-titre-regular">
+        <div class="flex-1 pr-8" data-tab-trigger="pace" role="button" tabindex="0">
+            <h2 class="cossette-titre-bold mb-4 text-center">Distance Pace</h2>
             <p class="mb-4">
                 Pace is the standard measurement of fitness level for a fixed
-                distance. Extremely effective for progress at a specific
+                distance. Extremely effective for progressing at a specific
                 distance. Standardized training plans utilizes pace to further
                 currate individual training.
             </p>
         </div>
         <div class="bg-white w-px self-stretch mx-6" aria-hidden="true"></div>
-        <div class="flex-1 pl-8">
-            <h2 class="text-2xl font-bold mb-4 text-center">Individual VDOT</h2>
+        <div class="flex-1 pl-8" data-tab-trigger="vdot" role="button" tabindex="0">
+            <h2 class="cossette-titre-bold mb-4 text-center">VDOT Metric</h2>
             <p class="mb-4">
                 VDOT is the absolute measurement of fitness level across
                 different distances. Originally created by Jack Daniels, VDOT
@@ -34,7 +34,16 @@ const { paceData, vdotData } = await getRunningData();
             </p>
         </div>
     </div>
-    <div class="p-8 text-xl bangers-regular">
+    <div class="flex">
+        <div class="flex-1 flex justify-center pr-8">
+            <div class="arrow" data-arrow-for="pace" aria-hidden="true"></div>
+        </div>
+        <div class="bg-white w-px self-stretch mx-6" aria-hidden="true"></div>
+        <div class="flex-1 flex justify-center pl-8">
+            <div class="arrow" data-arrow-for="vdot" aria-hidden="true"></div>
+        </div>
+    </div>
+    <div class="p-8 text-xl bangers-regular" data-tab-content="pace">
         <PaceChart client:load data={paceData} />
         {
             Object.entries(paceData.metadata.skill_level_definitions).map(
@@ -46,8 +55,7 @@ const { paceData, vdotData } = await getRunningData();
             )
         }
     </div>
-    <div class="separator"></div>
-    <div class="p-8 text-xl bangers-regular">
+    <div class="p-8 text-xl bangers-regular" data-tab-content="vdot">
         <VdotChart client:load data={vdotData} />
         {
             Object.entries(vdotData.metadata.tier_definitions).map(
@@ -69,10 +77,41 @@ const { paceData, vdotData } = await getRunningData();
 </Layout>
 
 <style>
-    .separator {
-        height: 10px;
-        width: 100vw;
-        background-color: black;
-        margin: 20px 0;
+    .arrow {
+        border-left: 18px solid transparent;
+        border-right: 18px solid transparent;
+        border-top: 30px solid black;
+        display: none;
+        margin: 0 8px;
+    }
+
+    [data-tab-content] {
+        display: none;
+    }
+    [data-tab-content].active {
+        display: block;
     }
 </style>
+
+<script type="module">
+    const triggers = Array.from(document.querySelectorAll('[data-tab-trigger]'));
+    const contents = Array.from(document.querySelectorAll('[data-tab-content]'));
+    const arrows = Array.from(document.querySelectorAll('[data-arrow-for]'));
+
+    function setActive(tab) {
+        triggers.forEach(t => t.classList.toggle('active', t.dataset.tabTrigger === tab));
+        contents.forEach(c => c.classList.toggle('active', c.dataset.tabContent === tab));
+        arrows.forEach(a => a.style.display = (a.dataset.arrowFor === tab) ? 'block' : 'none');
+        localStorage.setItem('pace_active_tab', tab);
+        // notify other components (charts) that tab changed
+        window.dispatchEvent(new CustomEvent('pace-tab-changed', { detail: tab }));
+    }
+
+    triggers.forEach(t => {
+        t.addEventListener('click', () => setActive(t.dataset.tabTrigger));
+        t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(t.dataset.tabTrigger); } });
+    });
+
+    const initial = localStorage.getItem('pace_active_tab') || 'pace';
+    setActive(initial);
+</script>
