@@ -35,7 +35,7 @@
       "max": 85
     },
     "tier_definitions": {
-      "beginner": {
+      "Beginner": {
         "vdot_range": "30-35",
         "definition": "New runners, those returning after extended breaks, or walkers transitioning to running. Minimal structured training background.",
         "typical_weekly_volume_km": "10-25",
@@ -46,7 +46,7 @@
         "improvement_rate": "Rapid: 3-5 VDOT points per 12-week training block",
         "key_focus": "Building consistency, injury prevention, aerobic base development"
       },
-      "recreational": {
+      "Recreational": {
         "vdot_range": "36-45",
         "definition": "Regular runners who train consistently. Many complete their first half marathon or marathon at this level. Follow basic training plans.",
         "typical_weekly_volume_km": "25-50",
@@ -57,7 +57,7 @@
         "improvement_rate": "Moderate: 2-3 VDOT points per 12-16 week training cycle",
         "key_focus": "Structured training plans, introducing tempo and interval work, building long run endurance"
       },
-      "competitive_amateur": {
+      "Competitive Amateur": {
         "vdot_range": "46-55",
         "definition": "Dedicated runners following structured training plans with periodization. Competitive in local races and age groups. Include tempo runs, intervals, and long runs.",
         "typical_weekly_volume_km": "40-70",
@@ -68,7 +68,7 @@
         "improvement_rate": "Steady: 1-2 VDOT points per 12-16 week training cycle",
         "key_focus": "Periodized training, race-specific workouts, pacing discipline, recovery optimization"
       },
-      "advanced": {
+      "Advanced": {
         "vdot_range": "56-65",
         "definition": "Serious competitive runners. Top finishers in local and regional races. Many qualify for prestigious events such as the Boston Marathon. Highly structured training with coaching support.",
         "typical_weekly_volume_km": "60-100",
@@ -79,7 +79,7 @@
         "improvement_rate": "Slow: 0.5-1 VDOT point per full training season",
         "key_focus": "High-volume training, strength work, lactate threshold optimization, racing strategy"
       },
-      "elite": {
+      "Elite": {
         "vdot_range": "66-75",
         "definition": "Post-collegiate competitive runners, semi-professional athletes, and top club runners. National-level competitors. Highly optimized training with periodization and sport science support.",
         "typical_weekly_volume_km": "90-160",
@@ -90,7 +90,7 @@
         "improvement_rate": "Marginal: less than 0.5 VDOT point per training season",
         "key_focus": "Marginal gains, altitude training, biomechanical optimization, sport science support"
       },
-      "world_class": {
+      "World Class": {
         "vdot_range": "76-85+",
         "definition": "Professional runners, Olympic contenders, and world record chasers. Full-time athletic careers with comprehensive coaching and medical support teams.",
         "typical_weekly_volume_km": "130-220+",
@@ -151,227 +151,227 @@
   "data": {
     "30": {
       "vdot": 30,
-      "tier": "beginner"
+      "tier": "Beginner"
     },
     "31": {
       "vdot": 31,
-      "tier": "beginner"
+      "tier": "Beginner"
     },
     "32": {
       "vdot": 32,
-      "tier": "beginner"
+      "tier": "Beginner"
     },
     "33": {
       "vdot": 33,
-      "tier": "beginner"
+      "tier": "Beginner"
     },
     "34": {
       "vdot": 34,
-      "tier": "beginner"
+      "tier": "Beginner"
     },
     "35": {
       "vdot": 35,
-      "tier": "beginner"
+      "tier": "Beginner"
     },
     "36": {
       "vdot": 36,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "37": {
       "vdot": 37,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "38": {
       "vdot": 38,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "39": {
       "vdot": 39,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "40": {
       "vdot": 40,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "41": {
       "vdot": 41,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "42": {
       "vdot": 42,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "43": {
       "vdot": 43,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "44": {
       "vdot": 44,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "45": {
       "vdot": 45,
-      "tier": "recreational"
+      "tier": "Recreational"
     },
     "46": {
       "vdot": 46,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "47": {
       "vdot": 47,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "48": {
       "vdot": 48,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "49": {
       "vdot": 49,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "50": {
       "vdot": 50,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "51": {
       "vdot": 51,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "52": {
       "vdot": 52,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "53": {
       "vdot": 53,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "54": {
       "vdot": 54,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "55": {
       "vdot": 55,
-      "tier": "competitive_amateur"
+      "tier": "Competitive Amateur"
     },
     "56": {
       "vdot": 56,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "57": {
       "vdot": 57,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "58": {
       "vdot": 58,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "59": {
       "vdot": 59,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "60": {
       "vdot": 60,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "61": {
       "vdot": 61,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "62": {
       "vdot": 62,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "63": {
       "vdot": 63,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "64": {
       "vdot": 64,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "65": {
       "vdot": 65,
-      "tier": "advanced"
+      "tier": "Advanced"
     },
     "66": {
       "vdot": 66,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "67": {
       "vdot": 67,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "68": {
       "vdot": 68,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "69": {
       "vdot": 69,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "70": {
       "vdot": 70,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "71": {
       "vdot": 71,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "72": {
       "vdot": 72,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "73": {
       "vdot": 73,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "74": {
       "vdot": 74,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "75": {
       "vdot": 75,
-      "tier": "elite"
+      "tier": "Elite"
     },
     "76": {
       "vdot": 76,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "77": {
       "vdot": 77,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "78": {
       "vdot": 78,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "79": {
       "vdot": 79,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "80": {
       "vdot": 80,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "81": {
       "vdot": 81,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "82": {
       "vdot": 82,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "83": {
       "vdot": 83,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "84": {
       "vdot": 84,
-      "tier": "world_class"
+      "tier": "World Class"
     },
     "85": {
       "vdot": 85,
-      "tier": "world_class"
+      "tier": "World Class"
     }
   }
 }
