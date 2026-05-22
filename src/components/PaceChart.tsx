@@ -28,33 +28,47 @@ export default function ({ data }: any) {
     const [initVersion, setInitVersion] = useState(0);
 
     useEffect(() => {
-        const seriesMapping: Record<string, number[]> = {};
         const obj = data.data[distance][gender];
         if (!obj) {
             return;
         }
 
-        // Since we're adding to each series in order, we can just push to the end
-        for (const [_ageRange, ageRangeData] of Object.entries(obj)) {
-            for (const [skillLevel, time] of Object.entries(ageRangeData as any)) {
-                const timeParts = (time as string).split(":");
+        // Use the canonical order from metadata.skill_level_definitions
+        const skillLevels: string[] = Object.keys(data.metadata.skill_level_definitions);
+
+        // Helper to find a skill value in either Title Case or lowercase keys
+        const findSkillValue = (ageRangeData: any, skillLabel: string) => {
+            if (ageRangeData.hasOwnProperty(skillLabel)) return ageRangeData[skillLabel];
+            const lower = skillLabel.toLowerCase();
+            if (ageRangeData.hasOwnProperty(lower)) return ageRangeData[lower];
+            return undefined;
+        };
+
+        const seriesMapping: Record<string, number[]> = {};
+
+        // Initialize arrays for each skill level to preserve order
+        for (const s of skillLevels) seriesMapping[s] = [];
+
+        // Iterate age groups in metadata order to collect values by skill level
+        for (const ageRange of data.metadata.age_groups) {
+            const ageRangeData = obj[ageRange];
+            if (!ageRangeData) continue;
+            for (const skillLabel of skillLevels) {
+                const time = findSkillValue(ageRangeData, skillLabel);
                 let seconds = 0;
-                if (timeParts.length === 3) {
-                    seconds = parseInt(timeParts[0]) * 3600 + parseInt(timeParts[1]) * 60 + parseInt(timeParts[2]);
-                } else if (timeParts.length === 2) {
-                    seconds = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
+                if (typeof time === 'string') {
+                    const timeParts = time.split(":");
+                    if (timeParts.length === 3) {
+                        seconds = parseInt(timeParts[0]) * 3600 + parseInt(timeParts[1]) * 60 + parseInt(timeParts[2]);
+                    } else if (timeParts.length === 2) {
+                        seconds = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
+                    }
                 }
-                if (!seriesMapping[skillLevel]) {
-                    seriesMapping[skillLevel] = [];
-                }
-                seriesMapping[skillLevel].push(seconds);
+                seriesMapping[skillLabel].push(seconds);
             }
         }
-        const series: echarts.SeriesOption[] = Array.from(Object.entries(seriesMapping).map(([name, data]) => ({
-            type: 'line',
-            name,
-            data,
-        })));
+
+        const series: echarts.SeriesOption[] = skillLevels.map((name) => ({ type: 'line', name, data: seriesMapping[name] }));
 
         const chart = echarts.init(chartRef.current);
         chartInstanceRef.current = chart;
