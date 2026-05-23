@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState, type KeyboardEvent } from "react";
 
 function calculatePace(hours: number, minutes: number, seconds: number, distance: number, paceDistance: number) {
     const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    if (totalSeconds <= 0 || distance <= 0) {
+        return "";
+    }
     // prefer under-estimation than over-estimation
     let paceSeconds = Math.ceil(paceDistance / (distance / totalSeconds));
     const parts: string[] = [];
@@ -53,13 +56,47 @@ function handleLeadingZeroKeydown(
     }
 }
 
+function WholeNumberInput({
+    id,
+    label,
+    value,
+    setValue,
+}: {
+    id: string;
+    label: string;
+    value: number;
+    setValue: (value: number) => void;
+}) {
+    return (
+        <div className="flex items-center gap-2">
+            <label htmlFor={id}>{label}</label>
+            <input
+                type="number"
+                id={id}
+                className="border-b border-gray-700"
+                inputMode="numeric"
+                min={0}
+                step={1}
+                value={value}
+                onFocus={(e) => e.target.select()}
+                onKeyDown={(e) => handleLeadingZeroKeydown(e, value, setValue)}
+                onChange={(e) => setValue(normalizeWholeNumber(e.target.value))}
+            />
+        </div>
+    );
+}
+
 export default function ({ paceData, vdotData }: Props) {
+    const customDistanceValue = "custom";
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
-    const [distance, setDistance] = useState(0);
+    const [distanceSelection, setDistanceSelection] = useState(String(paceData.metadata.distances[0]));
+    const [customDistance, setCustomDistance] = useState(0);
     const [gender, setGender] = useState<'male' | 'female' | null>(null);
     const [age, setAge] = useState(0);
+
+    const distance = distanceSelection === customDistanceValue ? customDistance : Number(distanceSelection);
 
     const paceKm = useMemo(() => {
         const pace = calculatePace(hours, minutes, seconds, distance, 1000);
@@ -78,7 +115,12 @@ export default function ({ paceData, vdotData }: Props) {
             return null;
         }
 
-        const data = paceData.data[distance][gender];
+        const distanceData = paceData.data[distance];
+        if (!distanceData) {
+            return null;
+        }
+
+        const data = distanceData[gender];
         if (!data) {
             return null;
         }
@@ -131,25 +173,37 @@ export default function ({ paceData, vdotData }: Props) {
 
     useEffect(() => {
         if (paceData) {
-            setDistance(paceData.metadata.distances[0]);
+            setDistanceSelection(String(paceData.metadata.distances[0]));
         }
+    }, [paceData]);
+
+    useEffect(() => {
         if (vdotData) {
             setVdotLevels(vdotData.data);
         }
-    }, [paceData, vdotData]);
+    }, [vdotData]);
 
     return (
         <>
             <form className="grid gap-4 bangers-regular text-xl">
                 <select
                     className="w-full border-b border-gray-700"
-                    value={distance}
-                    onChange={(e) => setDistance(Number(e.target.value))}
+                    value={distanceSelection}
+                    onChange={(e) => setDistanceSelection(e.target.value)}
                 >
                     {Object.keys(paceData.metadata.distanceLabels).map((distance) => (
                         <option key={distance} value={distance}>{paceData.metadata.distanceLabels[distance]}</option>
                     ))}
+                    <option value={customDistanceValue}>Custom</option>
                 </select>
+                {distanceSelection === customDistanceValue && (
+                    <WholeNumberInput
+                        id="customDistance"
+                        label="Meters"
+                        value={customDistance}
+                        setValue={setCustomDistance}
+                    />
+                )}
                 <div className="grid grid-cols-3 gap-4 time-input-div">
                     <div className="flex flex-col gap-1">
                         <label htmlFor="hours">Hours</label>
