@@ -1,7 +1,19 @@
 ---
-import Layout from "../layouts/Layout.astro";
+const target = "/map";
 ---
 
-<Layout title="Home">
-	<h1 class="text-4xl font-bold">Welcome to Fastansia!</h1>
-</Layout>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="refresh" content={`0; url=${target}`} />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Redirecting...</title>
+		<script is:inline>
+			window.location.replace(JSON.stringify(target));
+		</script>
+	</head>
+	<body>
+		<p>Redirecting to <a href={target}>/map</a>...</p>
+	</body>
+</html>
