@@ -254,34 +254,36 @@ export default function ({ paceData, vdotData }: Props) {
             </form>
             <div className="h-5 w-full"></div>
             <h4 className="text-2xl text-gray-500 bangers-regular">Optional Fields (For Pace Classification)</h4>
-            <div className="bangers-regular text-xl flex flex-row">
-                <p>Gender: </p>
-                <select
-                    className="w-full border-b border-gray-700"
-                    value={gender ?? ""}
-                    onChange={(e) => {
-                        const v = e.target.value;
-                        if (v === "") {
-                            setGender(null);
-                        } else {
-                            setGender(v as 'male' | 'female');
-                        }
-                    }}
-                >
-                    <option value="">Do not use</option>
-                    {paceData.metadata.genders.map((g: string) => (
-                        <option key={g} value={g}>{g}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="bangers-regular text-xl flex flex-row">
-                <p>Age: </p>
-                <input
-                    type="text"
-                    className="border-b border-gray-700"
-                    value={age ?? ""}
-                    onChange={(e) => setAge(e.target.value ? Number(e.target.value) : 0)}
-                />
+            <div className="bangers-regular text-xl flex items-center gap-6">
+                <div className="flex items-center gap-2">
+                    <p>Gender:</p>
+                    <select
+                        className="border-b border-gray-700"
+                        value={gender ?? ""}
+                        onChange={(e) => {
+                            const v = e.target.value;
+                            if (v === "") {
+                                setGender(null);
+                            } else {
+                                setGender(v as 'male' | 'female');
+                            }
+                        }}
+                    >
+                        <option value="">Do not use</option>
+                        {paceData.metadata.genders.map((g: string) => (
+                            <option key={g} value={g}>{g}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="flex items-center gap-2">
+                    <p>Age:</p>
+                    <input
+                        type="text"
+                        className="border-b border-gray-700 w-20"
+                        value={age ?? ""}
+                        onChange={(e) => setAge(e.target.value ? Number(e.target.value) : 0)}
+                    />
+                </div>
             </div>
             <div className="h-5 w-full"></div>
             <div className="text-3xl bangers-regular">
