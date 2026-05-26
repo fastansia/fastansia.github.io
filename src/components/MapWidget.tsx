@@ -92,6 +92,8 @@ export default function () {
     const mapInstanceRef = useRef<maplibregl.Map | null>(null);
     const [routes, setRoutes] = useState<Route[]>([]);
     const [activeRouteIndex, setActiveRouteIndex] = useState<number>(0);
+    const [isRenamingRoute, setIsRenamingRoute] = useState(false);
+    const [routeNameDraft, setRouteNameDraft] = useState('');
     const [isSnapping, setIsSnapping] = useState(false);
     const [snappingRouteIndex, setSnappingRouteIndex] = useState<number | null>(null);
     const [geolocationPoint, setGeolocationPoint] = useState<Waypoint | null>(null);
@@ -471,6 +473,31 @@ export default function () {
         });
     };
 
+    const startRenameActiveRoute = () => {
+        setRouteNameDraft(activeRoute.name);
+        setIsRenamingRoute(true);
+    };
+
+    const cancelRenameActiveRoute = () => {
+        setIsRenamingRoute(false);
+        setRouteNameDraft('');
+    };
+
+    const saveRenamedRoute = () => {
+        const trimmed = routeNameDraft.trim();
+        if (!trimmed) return;
+
+        setRoutes((prev) => {
+            const copy = cloneRoutes(prev);
+            if (copy[activeRouteIndex]) {
+                copy[activeRouteIndex].name = trimmed;
+            }
+            return copy;
+        });
+        setIsRenamingRoute(false);
+        setRouteNameDraft('');
+    };
+
     const deleteActiveRoute = () => {
         setRoutes((prev) => {
             if (prev.length <= 1) return prev; // keep at least one
@@ -532,6 +559,14 @@ export default function () {
                         </button>
                         <button
                             type="button"
+                            className="ml-1 rounded-md bg-slate-200 px-2 py-1 text-xs"
+                            onClick={startRenameActiveRoute}
+                            disabled={routes.length === 0 || isRenamingRoute}
+                        >
+                            Rename
+                        </button>
+                        <button
+                            type="button"
                             className="ml-1 rounded-md bg-rose-100 px-2 py-1 text-xs text-rose-700"
                             onClick={deleteActiveRoute}
                             disabled={routes.length <= 1}
@@ -548,12 +583,48 @@ export default function () {
                             </button>
                         ) : null}
                         <div className="ml-3">
-                            <div className="flex items-baseline gap-2">
-                                <p className="text-sm font-semibold text-slate-900">{activeRoute.name}</p>
-                                {isSnapping && snappingRouteIndex === activeRouteIndex ? (
-                                    <p className="text-xs text-slate-500">Snapping...</p>
-                                ) : null}
-                            </div>
+                            {isRenamingRoute ? (
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        value={routeNameDraft}
+                                        autoFocus
+                                        onChange={(e) => setRouteNameDraft(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                saveRenamedRoute();
+                                            }
+                                            if (e.key === 'Escape') {
+                                                e.preventDefault();
+                                                cancelRenameActiveRoute();
+                                            }
+                                        }}
+                                        onBlur={saveRenamedRoute}
+                                        className="min-w-0 rounded-md border border-slate-300 px-2 py-1 text-sm font-semibold text-slate-900 outline-none ring-0 focus:border-slate-500"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="rounded-md bg-slate-900 px-2 py-1 text-xs font-medium text-white"
+                                        onClick={saveRenamedRoute}
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="rounded-md bg-slate-200 px-2 py-1 text-xs"
+                                        onClick={cancelRenameActiveRoute}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="flex items-baseline gap-2">
+                                    <p className="text-sm font-semibold text-slate-900">{activeRoute.name}</p>
+                                    {isSnapping && snappingRouteIndex === activeRouteIndex ? (
+                                        <p className="text-xs text-slate-500">Snapping...</p>
+                                    ) : null}
+                                </div>
+                            )}
                             <p className="text-xs text-slate-600">{routePoints.length} point{routePoints.length === 1 ? '' : 's'}</p>
                             {typeof activeRoute.distance === 'number' ? (
                                 <p className="text-xs text-slate-500">{(activeRoute.distance / 1000).toFixed(2)} km</p>
