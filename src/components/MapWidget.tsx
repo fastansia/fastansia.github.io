@@ -94,9 +94,20 @@ export default function () {
     const [activeRouteIndex, setActiveRouteIndex] = useState<number>(0);
     const [isSnapping, setIsSnapping] = useState(false);
     const [snappingRouteIndex, setSnappingRouteIndex] = useState<number | null>(null);
+    const [geolocationPoint, setGeolocationPoint] = useState<Waypoint | null>(null);
+    const geolocateControlRef = useRef<{ ctrl: any; handler: (e: any) => void } | null>(null);
 
     const activeRoute = routes[activeRouteIndex] ?? { name: `Route ${activeRouteIndex + 1}`, points: [] };
     const routePoints = activeRoute.points;
+
+
+
+    const cloneRoutes = (prev: Route[]): Route[] => prev.map((route): Route => ({
+        ...route,
+        points: [...route.points],
+        snappedPoints: route.snappedPoints ? [...route.snappedPoints] : undefined,
+        geometry: route.geometry ? { ...route.geometry } : route.geometry,
+    }));
 
     async function requestSnap(routeIndex: number, coords: Array<[number, number]>) {
         setIsSnapping(true);
@@ -160,6 +171,24 @@ export default function () {
             setSnappingRouteIndex(null);
         }
     }
+
+    const appendPointToRoute = (routeIndex: number, point: Waypoint) => {
+        setRoutes((prev) => {
+            const copy = cloneRoutes(prev);
+            if (copy[routeIndex]) {
+                copy[routeIndex].points.push(point);
+                const coords = copy[routeIndex].points.map((p) => [p.lng, p.lat] as [number, number]);
+                requestSnap(routeIndex, coords);
+            } else {
+                const nextRoute: Route = { name: `Route ${copy.length + 1}`, points: [point], snappedPoints: undefined, geometry: undefined };
+                copy.push(nextRoute);
+                const nextRouteIndex = copy.length - 1;
+                setActiveRouteIndex(nextRouteIndex);
+                requestSnap(nextRouteIndex, [[point.lng, point.lat]]);
+            }
+            return copy;
+        });
+    };
 
     const undoLastPoint = () => {
         setRoutes((prev) => {
@@ -233,11 +262,23 @@ export default function () {
 
         map.addControl(new maplibregl.NavigationControl(), 'top-right');
         map.addControl(new maplibregl.FullscreenControl(), 'top-right');
-        map.addControl(new maplibregl.GeolocateControl({
-            positionOptions: { enableHighAccuracy: true },
-            trackUserLocation: true,
-            showAccuracyCircle: true,
-        }), 'top-right');
+        const createGeolocateControl = () => {
+            const ctrl = new maplibregl.GeolocateControl({
+                positionOptions: { enableHighAccuracy: true },
+                trackUserLocation: false,
+                showAccuracyCircle: true,
+            });
+
+            const handler = (event: GeolocationPosition) => {
+                setGeolocationPoint(createWaypoint(event.coords.longitude, event.coords.latitude));
+            };
+
+            ctrl.on('geolocate', handler);
+            geolocateControlRef.current = { ctrl, handler };
+            map.addControl(ctrl, 'top-right');
+        };
+
+        createGeolocateControl();
 
         const addRouteLayers = () => {
             if (map.getSource(ROUTE_SOURCE_ID)) {
@@ -277,6 +318,27 @@ export default function () {
                     'circle-stroke-width': 3,
                 },
             });
+
+            map.addSource('geolocation-source', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: [],
+                },
+            });
+
+            map.addLayer({
+                id: 'geolocation-point-layer',
+                type: 'circle',
+                source: 'geolocation-source',
+                filter: ['==', '$type', 'Point'],
+                paint: {
+                    'circle-color': '#0f766e',
+                    'circle-radius': 7,
+                    'circle-stroke-color': '#ffffff',
+                    'circle-stroke-width': 2,
+                },
+            });
         };
 
         const onMapLoad = () => {
@@ -295,6 +357,12 @@ export default function () {
         return () => {
             map.off('load', onMapLoad);
             map.off('moveend', onMapMove);
+            const stored = geolocateControlRef.current;
+            if (stored) {
+                try { stored.ctrl.off('geolocate', stored.handler); } catch { }
+                try { map.removeControl(stored.ctrl); } catch { }
+                geolocateControlRef.current = null;
+            }
             mapInstanceRef.current = null;
             map.remove();
         };
@@ -317,21 +385,7 @@ export default function () {
 
         const handler = (event: maplibregl.MapMouseEvent) => {
             const { lng, lat } = event.lngLat;
-            setRoutes((prev) => {
-                const copy = prev.map((r) => ({ ...r, points: [...r.points] }));
-                if (copy[activeRouteIndex]) {
-                    copy[activeRouteIndex].points.push(createWaypoint(lng, lat));
-                    const coords = copy[activeRouteIndex].points.map((p) => [p.lng, p.lat] as [number, number]);
-                    requestSnap(activeRouteIndex, coords);
-                } else {
-                    // if somehow missing, create new route
-                    copy.push({ name: `Route ${copy.length + 1}`, points: [createWaypoint(lng, lat)] });
-                    setActiveRouteIndex(copy.length - 1);
-                    const coords = copy[copy.length - 1].points.map((p) => [p.lng, p.lat] as [number, number]);
-                    requestSnap(copy.length - 1, coords);
-                }
-                return copy;
-            });
+            appendPointToRoute(activeRouteIndex, createWaypoint(lng, lat));
         };
 
         map.on('click', handler);
@@ -374,9 +428,31 @@ export default function () {
         }
     }, [routeGeoJson, activeRouteIndex]);
 
+    useEffect(() => {
+        const map = mapInstanceRef.current;
+        if (!map || !map.isStyleLoaded()) return;
+        const source = map.getSource('geolocation-source') as any;
+        if (source && typeof source.setData === 'function') {
+            source.setData(geolocationPoint ? {
+                type: 'FeatureCollection',
+                features: [{
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [geolocationPoint.lng, geolocationPoint.lat],
+                    },
+                    properties: {},
+                }],
+            } : {
+                type: 'FeatureCollection',
+                features: [],
+            });
+        }
+    }, [geolocationPoint]);
+
     const clearRoute = () => {
         setRoutes((prev) => {
-            const copy = prev.map((r) => ({ ...r, points: [...r.points] }));
+            const copy = cloneRoutes(prev);
             if (copy[activeRouteIndex]) copy[activeRouteIndex].points = [];
             requestSnap(activeRouteIndex, []);
             return copy;
@@ -398,13 +474,38 @@ export default function () {
     const deleteActiveRoute = () => {
         setRoutes((prev) => {
             if (prev.length <= 1) return prev; // keep at least one
-            const copy = prev.slice();
+            const copy = cloneRoutes(prev);
             copy.splice(activeRouteIndex, 1);
             // adjust active index to remain in bounds
             const newIndex = Math.max(0, Math.min(activeRouteIndex - 1, copy.length - 1));
             setActiveRouteIndex(newIndex);
             return copy;
         });
+    };
+
+    const removeGeolocationPoint = () => {
+        setGeolocationPoint(null);
+        const map = mapInstanceRef.current;
+        const stored = geolocateControlRef.current;
+        if (!map || !stored) return;
+
+        try {
+            stored.ctrl.off('geolocate', stored.handler);
+        } catch { }
+        try {
+            map.removeControl(stored.ctrl);
+        } catch { }
+
+        // recreate a fresh control so its internal markers are removed
+        const newCtrl = new maplibregl.GeolocateControl({
+            positionOptions: { enableHighAccuracy: true },
+            trackUserLocation: false,
+            showAccuracyCircle: true,
+        });
+        // reuse the same handler function
+        newCtrl.on('geolocate', stored.handler);
+        geolocateControlRef.current = { ctrl: newCtrl, handler: stored.handler };
+        map.addControl(newCtrl, 'top-right');
     };
 
     return <>
@@ -437,6 +538,15 @@ export default function () {
                         >
                             Delete
                         </button>
+                        {geolocationPoint ? (
+                            <button
+                                type="button"
+                                className="ml-1 rounded-md bg-amber-100 px-2 py-1 text-xs text-amber-800"
+                                onClick={removeGeolocationPoint}
+                            >
+                                Remove location
+                            </button>
+                        ) : null}
                         <div className="ml-3">
                             <div className="flex items-baseline gap-2">
                                 <p className="text-sm font-semibold text-slate-900">{activeRoute.name}</p>
