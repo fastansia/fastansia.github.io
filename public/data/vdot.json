@@ -37,6 +37,7 @@
     "tier_definitions": {
       "Beginner": {
         "vdot_range": "30-35",
+        "color": "#19db50",
         "definition": "New runners, those returning after extended breaks, or walkers transitioning to running. Minimal structured training background.",
         "typical_weekly_volume_km": "10-25",
         "typical_weekly_volume_mi": "6-15",
@@ -48,6 +49,7 @@
       },
       "Recreational": {
         "vdot_range": "36-45",
+        "color": "#a4e648",
         "definition": "Regular runners who train consistently. Many complete their first half marathon or marathon at this level. Follow basic training plans.",
         "typical_weekly_volume_km": "25-50",
         "typical_weekly_volume_mi": "15-30",
@@ -59,6 +61,7 @@
       },
       "Competitive Amateur": {
         "vdot_range": "46-55",
+        "color": "#ff8000",
         "definition": "Dedicated runners following structured training plans with periodization. Competitive in local races and age groups. Include tempo runs, intervals, and long runs.",
         "typical_weekly_volume_km": "40-70",
         "typical_weekly_volume_mi": "25-45",
@@ -70,6 +73,7 @@
       },
       "Advanced": {
         "vdot_range": "56-65",
+        "color": "#ff3758",
         "definition": "Serious competitive runners. Top finishers in local and regional races. Many qualify for prestigious events such as the Boston Marathon. Highly structured training with coaching support.",
         "typical_weekly_volume_km": "60-100",
         "typical_weekly_volume_mi": "40-65",
@@ -81,6 +85,7 @@
       },
       "Elite": {
         "vdot_range": "66-75",
+        "color": "#b62929",
         "definition": "Post-collegiate competitive runners, semi-professional athletes, and top club runners. National-level competitors. Highly optimized training with periodization and sport science support.",
         "typical_weekly_volume_km": "90-160",
         "typical_weekly_volume_mi": "55-100",
@@ -92,6 +97,7 @@
       },
       "World Class": {
         "vdot_range": "76-85+",
+        "color": "#700707",
         "definition": "Professional runners, Olympic contenders, and world record chasers. Full-time athletic careers with comprehensive coaching and medical support teams.",
         "typical_weekly_volume_km": "130-220+",
         "typical_weekly_volume_mi": "80-140+",
@@ -103,37 +109,32 @@
       }
     },
     "training_zones": {
-      "E": {
-        "name": "Easy",
+      "Easy": {
         "purpose": "Aerobic base development and recovery",
         "percent_vo2max": "59-74%",
         "percent_max_hr": "65-79%",
         "recommended_volume_share": "70-80% of weekly mileage",
         "typical_duration": "30-150 min"
       },
-      "M": {
-        "name": "Marathon",
+      "Marathon": {
         "purpose": "Marathon-specific endurance and fat oxidation",
         "percent_vo2max": "75-84%",
         "percent_max_hr": "80-85%",
         "typical_duration": "40-110 min"
       },
-      "T": {
-        "name": "Threshold",
+      "Threshold": {
         "purpose": "Lactate threshold improvement and sustained speed",
         "percent_vo2max": "83-88%",
         "percent_max_hr": "88-92%",
         "typical_duration": "20-60 min"
       },
-      "I": {
-        "name": "Interval",
+      "Interval": {
         "purpose": "VO2max development and aerobic power",
         "percent_vo2max": "95-100%",
         "percent_max_hr": "95-100%",
         "typical_duration": "3-5 min work intervals"
       },
-      "R": {
-        "name": "Repetition",
+      "Repetition": {
         "purpose": "Running economy and neuromuscular speed",
         "percent_vo2max": "105-120%",
         "percent_max_hr": "Near max",

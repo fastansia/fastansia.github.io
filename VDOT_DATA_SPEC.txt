@@ -24,14 +24,14 @@ Exactly 56 integer values from **30** to **85** inclusive, each represented as a
 
 Exactly 6 tiers, in ascending order of ability:
 
-| Key                    | VDOT Range | Definition                                                                                                                  |
-|------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------|
-| `"beginner"`           | 30–35      | New runners, those returning after extended breaks, or walkers transitioning to running. Minimal structured training.        |
-| `"recreational"`       | 36–45      | Regular runners who train consistently. Many complete their first half marathon or marathon at this level.                   |
-| `"competitive_amateur"`| 46–55      | Dedicated runners following structured training plans with periodization. Competitive in local races and age groups.         |
-| `"advanced"`           | 56–65      | Serious competitive runners. Top finishers in local and regional races. Many qualify for events such as the Boston Marathon. |
-| `"elite"`              | 66–75      | Post-collegiate competitive runners, semi-professional athletes, and top club runners. National-level competitors.          |
-| `"world_class"`        | 76–85+     | Professional runners, Olympic contenders, and world record chasers. Full-time athletic careers.                             |
+| Key                   | VDOT Range | Definition                                                                                                                  |
+|-----------------------|------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `"Beginner"`           | 30–35      | New runners, those returning after extended breaks, or walkers transitioning to running. Minimal structured training.        |
+| `"Recreational"`       | 36–45      | Regular runners who train consistently. Many complete their first half marathon or marathon at this level.                   |
+| `"Competitive Amateur"`| 46–55      | Dedicated runners following structured training plans with periodization. Competitive in local races and age groups.         |
+| `"Advanced"`           | 56–65      | Serious competitive runners. Top finishers in local and regional races. Many qualify for events such as the Boston Marathon. |
+| `"Elite"`              | 66–75      | Post-collegiate competitive runners, semi-professional athletes, and top club runners. National-level competitors.          |
+| `"World Class"`        | 76–85+     | Professional runners, Olympic contenders, and world record chasers. Full-time athletic careers.                             |
 
 ---
 
@@ -49,7 +49,7 @@ Exactly 6 tiers, in ascending order of ability:
       {
         "id": "string — unique short identifier for this source",
         "name": "string — full citation (Author, Title, Publisher, Year)",
-        "url": "string | null — source URL (null if no URL available)",
+        "url": "string (optional) — source URL",
         "notes": "string — what this source contributed to the dataset"
       }
     ],
@@ -68,8 +68,9 @@ Exactly 6 tiers, in ascending order of ability:
     },
 
     "tier_definitions": {
-      "<tier_key>": {
+      "<tier_label>": {
         "vdot_range": "string — e.g., '30-35'",
+        "color": "string — hex color for this tier",
         "definition": "string — description of runner profile at this tier",
         "typical_weekly_volume_km": "string — range in kilometers",
         "typical_weekly_volume_mi": "string — range in miles",
@@ -82,8 +83,7 @@ Exactly 6 tiers, in ascending order of ability:
     },
 
     "training_zones": {
-      "<zone_letter>": {
-        "name": "string — full zone name",
+      "<zone_name>": {
         "purpose": "string — physiological purpose of this zone",
         "percent_vo2max": "string — %VO2max range",
         "percent_max_hr": "string — %MaxHR range",
@@ -100,7 +100,7 @@ Exactly 6 tiers, in ascending order of ability:
   "data": {
     "<vdot_value>": {
       "vdot": "integer — the VDOT score (redundant with key, for convenience)",
-      "tier": "string — one of the 6 tier keys from Section 2.2"
+      "tier": "string — one of the 6 tier labels from Section 2.2"
     }
   }
 }
@@ -118,13 +118,13 @@ metadata.tier_definitions[tier].improvement_rate → improvement info
 **Examples:**
 
 ```
-data["50"].tier                                          → "competitive_amateur"
+data["50"].tier                                          → "Competitive Amateur"
 data["50"].vdot                                          → 50
-metadata.tier_definitions["competitive_amateur"].vdot_range → "46-55"
-metadata.tier_definitions["competitive_amateur"].typical_weekly_volume_km → "40-70"
+metadata.tier_definitions["Competitive Amateur"].vdot_range → "46-55"
+metadata.tier_definitions["Competitive Amateur"].typical_weekly_volume_km → "40-70"
 
-data["75"].tier                                          → "elite"
-data["82"].tier                                          → "world_class"
+data["75"].tier                                          → "Elite"
+data["82"].tier                                          → "World Class"
 ```
 
 ---
@@ -139,7 +139,7 @@ Must contain **at least 2 entries**. Each source object requires:
 |---------|------------------|----------|--------------------------------------------------|
 | `id`    | `string`         | Yes      | Unique short identifier (e.g., `"daniels_book"`) |
 | `name`  | `string`         | Yes      | Full citation: Author, Title, Publisher, Year     |
-| `url`   | `string \| null` | Yes      | Source URL, or `null` if no URL available         |
+| `url`   | `string`         | No       | Source URL (optional; omit if no URL available)   |
 | `notes` | `string`         | Yes      | What this source contributed to the dataset       |
 
 ### 4.2 `formula` Object
@@ -156,11 +156,12 @@ Documents the Daniels-Gilbert oxygen-cost model used to calculate VDOT from any 
 
 ### 4.3 `tier_definitions` Object
 
-Exactly 6 keys matching Section 2.2. Each tier object has exactly 9 fields:
+Exactly 6 keys matching Section 2.2. Each tier object has exactly 10 fields:
 
 | Field                        | Type     | Description                                          |
 |------------------------------|----------|------------------------------------------------------|
 | `vdot_range`                 | `string` | e.g., `"30-35"`                                      |
+| `color`                      | `string` | Hex color used for this tier                         |
 | `definition`                 | `string` | Runner profile description                           |
 | `typical_weekly_volume_km`   | `string` | Weekly mileage range in kilometers                   |
 | `typical_weekly_volume_mi`   | `string` | Weekly mileage range in miles                        |
@@ -172,11 +173,10 @@ Exactly 6 keys matching Section 2.2. Each tier object has exactly 9 fields:
 
 ### 4.4 `training_zones` Object
 
-Exactly 5 keys: `"E"`, `"M"`, `"T"`, `"I"`, `"R"`. Each zone object has:
+Exactly 5 keys: `"Easy"`, `"Marathon"`, `"Threshold"`, `"Interval"`, `"Repetition"`. Each zone object has:
 
 | Field                       | Type     | Required | Description                           |
 |-----------------------------|----------|----------|---------------------------------------|
-| `name`                      | `string` | Yes      | Full zone name (e.g., `"Easy"`)       |
 | `purpose`                   | `string` | Yes      | Physiological purpose                 |
 | `percent_vo2max`            | `string` | Yes      | %VO2max range                         |
 | `percent_max_hr`            | `string` | Yes      | %MaxHR range                          |
@@ -199,12 +199,12 @@ The `tier` field must match the VDOT value according to the classification in Se
 
 | VDOT Range | Required Tier            |
 |------------|--------------------------|
-| 30–35      | `"beginner"`             |
-| 36–45      | `"recreational"`         |
-| 46–55      | `"competitive_amateur"`  |
-| 56–65      | `"advanced"`             |
-| 66–75      | `"elite"`                |
-| 76–85      | `"world_class"`          |
+| 30–35      | `"Beginner"`             |
+| 36–45      | `"Recreational"`         |
+| 46–55      | `"Competitive Amateur"`  |
+| 56–65      | `"Advanced"`             |
+| 66–75      | `"Elite"`                |
+| 76–85      | `"World Class"`          |
 
 ### 5.2 VDOT Value Consistency
 
@@ -244,7 +244,7 @@ Tier definitions are based on training science literature and coaching consensus
 
 ### 6.3 VDOT 81–85
 
-VDOT values 81–85 extend beyond the published Daniels tables (which end at 80). Their tier assignment (`"world_class"`) follows the same classification logic as VDOT 76–80 and is not extrapolated — it is a direct application of the tier boundary rules.
+VDOT values 81–85 extend beyond the published Daniels tables (which end at 80). Their tier assignment (`"World Class"`) follows the same classification logic as VDOT 76–80 and is not extrapolated — it is a direct application of the tier boundary rules.
 
 ### 6.4 Sourcing Rules
 
@@ -260,15 +260,16 @@ VDOT values 81–85 extend beyond the published Daniels tables (which end at 80)
 ```json
 "50": {
   "vdot": 50,
-  "tier": "competitive_amateur"
+  "tier": "Competitive Amateur"
 }
 ```
 
 **Tier profile lookup:**
 
 ```json
-metadata.tier_definitions["competitive_amateur"] → {
+metadata.tier_definitions["Competitive Amateur"] → {
   "vdot_range": "46-55",
+  "color": "#ff8000",
   "definition": "Dedicated runners following structured training plans with periodization. Competitive in local races and age groups. Include tempo runs, intervals, and long runs.",
   "typical_weekly_volume_km": "40-70",
   "typical_weekly_volume_mi": "25-45",
@@ -295,8 +296,8 @@ Run these checks after generating the dataset:
 - [ ] `metadata.sources` contains at least 2 entries with `id`, `name`, and `notes`.
 - [ ] `metadata.formula` contains all 5 required fields.
 - [ ] `metadata.vdot_range` contains `min: 30` and `max: 85`.
-- [ ] `metadata.tier_definitions` contains exactly 6 entries, each with 9 fields.
-- [ ] `metadata.training_zones` contains exactly 5 entries (`E`, `M`, `T`, `I`, `R`).
+- [ ] `metadata.tier_definitions` contains exactly 6 entries, each with 10 fields.
+- [ ] `metadata.training_zones` contains exactly 5 entries (`Easy`, `Marathon`, `Threshold`, `Interval`, `Repetition`).
 - [ ] `metadata.limitations` contains at least 5 entries.
 - [ ] `metadata.compiled_date` is a valid ISO 8601 date.
 

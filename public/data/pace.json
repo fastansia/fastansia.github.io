@@ -32,6 +32,13 @@
       "Advanced": "Trains seriously with a structured program, typically 3-5+ years of experience. Faster than ~80% of runners. Roughly 80th percentile.",
       "Elite": "Competitive or semi-professional level. Faster than ~95% of runners. Roughly 95th percentile or above."
     },
+    "skill_level_colors": {
+      "Novice": "#19db50",
+      "Beginner": "#a4e648",
+      "Intermediate": "#ff8000",
+      "Advanced": "#ff3758",
+      "Elite": "#940000"
+    },
     "age_groups": [
       "10-19",
       "20-29",

@@ -68,7 +68,17 @@ export default function ({ data }: any) {
             }
         }
 
-        const series: echarts.SeriesOption[] = skillLevels.map((name) => ({ type: 'line', name, data: seriesMapping[name] }));
+        const series: echarts.SeriesOption[] = skillLevels.map((name) => ({
+            type: 'line',
+            name,
+            data: seriesMapping[name],
+            lineStyle: {
+                color: data.metadata.skill_level_colors[name],
+            },
+            itemStyle: {
+                color: data.metadata.skill_level_colors[name],
+            },
+        }));
 
         const chart = echarts.init(chartRef.current);
         chartInstanceRef.current = chart;

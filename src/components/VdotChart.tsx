@@ -6,19 +6,6 @@ function getTierOrder(vdotRange: string) {
     return match ? Number(match[0]) : Number.POSITIVE_INFINITY;
 }
 
-function getTierColor(index: number) {
-    const colors = [
-        "#d97706",
-        "#f59e0b",
-        "#84cc16",
-        "#06b6d4",
-        "#3b82f6",
-        "#8b5cf6",
-    ];
-
-    return colors[index % colors.length];
-}
-
 interface Props {
     data: any;
 }
@@ -30,7 +17,7 @@ export default function VdotChart({ data }: Props) {
     const tiers = useMemo(() => {
         return Object.entries(data.metadata.tier_definitions)
             .sort(([, left], [, right]) => getTierOrder((left as any).vdot_range) - getTierOrder((right as any).vdot_range))
-            .map(([tier, definition]: [string, any], index) => {
+            .map(([tier, definition]: [string, any]) => {
                 const values = Object.values(data.data)
                     .filter((entry: any) => entry.tier === tier)
                     .map((entry: any) => entry.vdot)
@@ -40,7 +27,7 @@ export default function VdotChart({ data }: Props) {
                     tier,
                     range: definition.vdot_range,
                     values,
-                    color: getTierColor(index),
+                    color: definition.color,
                 };
             });
     }, [data]);

@@ -55,11 +55,11 @@ Exactly 5 levels, in ascending order of ability:
 
 | Key              | Percentile | Definition                                                                                        |
 |------------------|------------|---------------------------------------------------------------------------------------------------|
-| `"novice"`       | ~5th       | Has just started running or runs very occasionally. Slower than 95% of runners.                   |
-| `"beginner"`     | ~20th      | Has been running regularly for up to 6 months. Faster than ~20% of runners.                       |
-| `"intermediate"` | ~50th      | Has been running consistently for 1–2+ years with structured training. Median runner.             |
-| `"advanced"`     | ~80th      | Trains seriously with a structured program, typically 3–5+ years of experience.                   |
-| `"elite"`        | ~95th+     | Competitive or semi-professional level. Faster than ~95% of runners.                              |
+| `"Novice"`       | ~5th       | Has just started running or runs very occasionally. Slower than 95% of runners.                   |
+| `"Beginner"`     | ~20th      | Has been running regularly for up to 6 months. Faster than ~20% of runners.                       |
+| `"Intermediate"` | ~50th      | Has been running consistently for 1–2+ years with structured training. Median runner.             |
+| `"Advanced"`     | ~80th      | Trains seriously with a structured program, typically 3–5+ years of experience.                   |
+| `"Elite"`        | ~95th+     | Competitive or semi-professional level. Faster than ~95% of runners.                              |
 
 ---
 
@@ -80,11 +80,18 @@ Exactly 5 levels, in ascending order of ability:
       }
     ],
     "skill_level_definitions": {
-      "novice": "string — definition (see Section 2.4)",
-      "beginner": "string",
-      "intermediate": "string",
-      "advanced": "string",
-      "elite": "string"
+      "Novice": "string — definition (see Section 2.4)",
+      "Beginner": "string",
+      "Intermediate": "string",
+      "Advanced": "string",
+      "Elite": "string"
+    },
+    "skill_level_colors": {
+      "Novice": "string — hex color for this level",
+      "Beginner": "string",
+      "Intermediate": "string",
+      "Advanced": "string",
+      "Elite": "string"
     },
     "age_groups": ["10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89"],
     "distances": [400, 800, 1000, 5000, 10000, 21097.5, 42195],
@@ -104,11 +111,11 @@ Exactly 5 levels, in ascending order of ability:
     "<distance>": {
       "<gender>": {
         "<age_group>": {
-          "novice": "<time>",
-          "beginner": "<time>",
-          "intermediate": "<time>",
-          "advanced": "<time>",
-          "elite": "<time>"
+          "Novice": "<time>",
+          "Beginner": "<time>",
+          "Intermediate": "<time>",
+          "Advanced": "<time>",
+          "Elite": "<time>"
         }
       }
     }
@@ -125,7 +132,7 @@ data[distance][gender][age_group][skill_level] → time string
 **Example:**
 
 ```
-data[5000]["male"]["30-39"]["intermediate"] → "20:23"
+data[5000]["male"]["30-39"]["Intermediate"] → "20:23"
 ```
 
 ---
@@ -156,10 +163,10 @@ These invariants **must** hold across the entire dataset. Use them as validation
 
 ### 5.1 Monotonicity by Skill Level
 
-For any fixed `(distance, gender, age_group)`, times must strictly decrease from novice → elite:
+For any fixed `(distance, gender, age_group)`, times must strictly decrease from Novice → Elite:
 
 ```
-novice > beginner > intermediate > advanced > elite
+Novice > Beginner > Intermediate > Advanced > Elite
 ```
 
 ### 5.2 Monotonicity by Age (peak at 20-29)
@@ -221,7 +228,7 @@ For sprint and middle-distance events (400m, 800m) where road race databases hav
 2. **Cross-reference** at least 2 sources per distance when possible.
 3. **Prefer percentile-based data** over simple averages. The skill levels map to specific percentile bands (see Section 2.4).
 4. If a source provides data for a single representative age (e.g., age 30), **interpolate** using World Athletics age-grading factors to fill other age groups.
-5. **Flag extrapolations** — if data for a specific cell (e.g., 80-89 year-old female 400m elite) is estimated rather than directly sourced, note this in the metadata.
+5. **Flag extrapolations** — if data for a specific cell (e.g., 80-89 year-old female 400m Elite) is estimated rather than directly sourced, note this in the metadata.
 
 ---
 
@@ -230,24 +237,24 @@ For sprint and middle-distance events (400m, 800m) where road race databases hav
 ```json
 "5000": {
   "male": {
-    "10-19": {"novice": "28:42", "beginner": "24:50", "intermediate": "21:30", "advanced": "18:43", "elite": "16:34"},
-    "20-29": {"novice": "26:35", "beginner": "23:01", "intermediate": "19:58", "advanced": "17:22", "elite": "15:23"},
-    "30-39": {"novice": "27:09", "beginner": "23:30", "intermediate": "20:23", "advanced": "17:44", "elite": "15:42"},
-    "40-49": {"novice": "29:14", "beginner": "25:19", "intermediate": "21:57", "advanced": "19:06", "elite": "16:54"},
-    "50-59": {"novice": "32:18", "beginner": "27:57", "intermediate": "24:14", "advanced": "21:05", "elite": "18:39"},
-    "60-69": {"novice": "36:14", "beginner": "31:23", "intermediate": "27:11", "advanced": "23:39", "elite": "20:56"},
-    "70-79": {"novice": "41:21", "beginner": "35:47", "intermediate": "31:01", "advanced": "26:58", "elite": "23:52"},
-    "80-89": {"novice": "47:55", "beginner": "41:27", "intermediate": "35:56", "advanced": "31:16", "elite": "27:41"}
+    "10-19": {"Novice": "28:42", "Beginner": "24:50", "Intermediate": "21:30", "Advanced": "18:43", "Elite": "16:34"},
+    "20-29": {"Novice": "26:35", "Beginner": "23:01", "Intermediate": "19:58", "Advanced": "17:22", "Elite": "15:23"},
+    "30-39": {"Novice": "27:09", "Beginner": "23:30", "Intermediate": "20:23", "Advanced": "17:44", "Elite": "15:42"},
+    "40-49": {"Novice": "29:14", "Beginner": "25:19", "Intermediate": "21:57", "Advanced": "19:06", "Elite": "16:54"},
+    "50-59": {"Novice": "32:18", "Beginner": "27:57", "Intermediate": "24:14", "Advanced": "21:05", "Elite": "18:39"},
+    "60-69": {"Novice": "36:14", "Beginner": "31:23", "Intermediate": "27:11", "Advanced": "23:39", "Elite": "20:56"},
+    "70-79": {"Novice": "41:21", "Beginner": "35:47", "Intermediate": "31:01", "Advanced": "26:58", "Elite": "23:52"},
+    "80-89": {"Novice": "47:55", "Beginner": "41:27", "Intermediate": "35:56", "Advanced": "31:16", "Elite": "27:41"}
   },
   "female": {
-    "10-19": {"novice": "34:00", "beginner": "29:27", "intermediate": "25:32", "advanced": "22:12", "elite": "19:40"},
-    "20-29": {"novice": "31:31", "beginner": "27:17", "intermediate": "23:39", "advanced": "20:34", "elite": "18:12"},
-    "30-39": {"novice": "32:14", "beginner": "27:54", "intermediate": "24:11", "advanced": "21:02", "elite": "18:37"},
-    "40-49": {"novice": "34:42", "beginner": "30:02", "intermediate": "26:02", "advanced": "22:38", "elite": "20:02"},
-    "50-59": {"novice": "38:19", "beginner": "33:10", "intermediate": "28:45", "advanced": "25:00", "elite": "22:08"},
-    "60-69": {"novice": "42:59", "beginner": "37:13", "intermediate": "32:16", "advanced": "28:04", "elite": "24:50"},
-    "70-79": {"novice": "49:03", "beginner": "42:28", "intermediate": "36:48", "advanced": "32:01", "elite": "28:20"},
-    "80-89": {"novice": "56:53", "beginner": "49:14", "intermediate": "42:41", "advanced": "37:07", "elite": "32:51"}
+    "10-19": {"Novice": "34:00", "Beginner": "29:27", "Intermediate": "25:32", "Advanced": "22:12", "Elite": "19:40"},
+    "20-29": {"Novice": "31:31", "Beginner": "27:17", "Intermediate": "23:39", "Advanced": "20:34", "Elite": "18:12"},
+    "30-39": {"Novice": "32:14", "Beginner": "27:54", "Intermediate": "24:11", "Advanced": "21:02", "Elite": "18:37"},
+    "40-49": {"Novice": "34:42", "Beginner": "30:02", "Intermediate": "26:02", "Advanced": "22:38", "Elite": "20:02"},
+    "50-59": {"Novice": "38:19", "Beginner": "33:10", "Intermediate": "28:45", "Advanced": "25:00", "Elite": "22:08"},
+    "60-69": {"Novice": "42:59", "Beginner": "37:13", "Intermediate": "32:16", "Advanced": "28:04", "Elite": "24:50"},
+    "70-79": {"Novice": "49:03", "Beginner": "42:28", "Intermediate": "36:48", "Advanced": "32:01", "Elite": "28:20"},
+    "80-89": {"Novice": "56:53", "Beginner": "49:14", "Intermediate": "42:41", "Advanced": "37:07", "Elite": "32:51"}
   }
 }
 ```
