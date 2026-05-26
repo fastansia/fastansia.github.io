@@ -520,7 +520,7 @@ export default function () {
                             className="ml-1 rounded-md border px-2 py-1 text-sm"
                         >
                             {routes.map((r, idx) => (
-                                <option key={idx} value={idx}>{r.name}{typeof r.distance === 'number' ? ` (${(r.distance / 1000).toFixed(2)} km)` : ''}</option>
+                                <option key={idx} value={idx}>{r.name}</option>
                             ))}
                         </select>
                         <button
