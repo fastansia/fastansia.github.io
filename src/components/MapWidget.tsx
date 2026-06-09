@@ -510,6 +510,56 @@ export default function () {
         });
     };
 
+    const exportRoutes = () => {
+        const dataStr = JSON.stringify(routes, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        const exportFileDefaultName = 'routes.json';
+
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    };
+
+    const handleImportFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const content = event.target?.result as string;
+                const parsed = JSON.parse(content);
+                
+                const WaypointSchema = z.object({ lng: z.number(), lat: z.number() });
+                const RouteSchema = z.object({ 
+                    name: z.string(), 
+                    points: z.array(WaypointSchema), 
+                    snappedPoints: z.array(WaypointSchema).optional(), 
+                    geometry: z.any().optional(), 
+                    distance: z.number().optional() 
+                });
+                const RoutesSchema = z.array(RouteSchema);
+                const result = RoutesSchema.safeParse(parsed);
+
+                if (result.success) {
+                    setRoutes(result.data);
+                    setActiveRouteIndex(0);
+                    alert(`Successfully imported ${result.data.length} routes.`);
+                } else {
+                    alert('Invalid file format. Could not import routes.');
+                    console.error('Import validation failed', result.error);
+                }
+            } catch (err) {
+                alert('Error parsing file.');
+                console.error('Import error', err);
+            }
+            // Reset input so the same file can be selected again
+            e.target.value = '';
+        };
+        reader.readAsText(file);
+    };
+
     const removeGeolocationPoint = () => {
         setGeolocationPoint(null);
         const map = mapInstanceRef.current;
@@ -573,6 +623,23 @@ export default function () {
                         >
                             Delete
                         </button>
+                        <button
+                            type="button"
+                            className="ml-1 rounded-md bg-slate-200 px-2 py-1 text-xs"
+                            onClick={exportRoutes}
+                            disabled={routes.length === 0}
+                        >
+                            Export
+                        </button>
+                        <label className="ml-1 cursor-pointer rounded-md bg-slate-200 px-2 py-1 text-xs">
+                            Import
+                            <input
+                                type="file"
+                                accept=".json"
+                                onChange={handleImportFile}
+                                className="hidden"
+                            />
+                        </label>
                         {geolocationPoint ? (
                             <button
                                 type="button"
